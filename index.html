@@ -83,6 +83,13 @@
   .seg button:last-child{border-right:none}
   .seg button.on{background:var(--pnp-green);color:#fff}
 
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+  .chips button{padding:10px 14px;font-size:14px;font-weight:600;border-radius:99px;background:#fcfdfc;color:var(--ink);border:1px solid var(--line)}
+  .chips button.on{background:var(--pnp-green);color:#fff;border-color:var(--pnp-green)}
+  .chips button.other{border-style:dashed;color:var(--muted)}
+  .chips button:active{transform:translateY(1px)}
+  .other-input{margin-top:8px}
+
   .timerow{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-top:14px}
   .timerow .field{flex:1 1 30%}
 
@@ -214,12 +221,57 @@
         <label class="field full"><span>Lugar de la intervención</span><input data-k="lugar" placeholder="Jr. ... cuadra ..., El Tambo"></label>
 
         <div class="subhead">Equipo móvil</div>
-        <label class="field"><span>Marca</span><input data-k="marca" placeholder="Samsung"></label>
+        <label class="field full"><span>Marca</span>
+          <div class="chips" data-chip="marca">
+            <button type="button" data-v="Samsung">Samsung</button>
+            <button type="button" data-v="Xiaomi">Xiaomi</button>
+            <button type="button" data-v="iPhone">iPhone</button>
+            <button type="button" data-v="Motorola">Motorola</button>
+            <button type="button" data-v="Honor">Honor</button>
+            <button type="button" data-v="Huawei">Huawei</button>
+            <button type="button" data-v="Oppo">Oppo</button>
+            <button type="button" data-v="Realme">Realme</button>
+            <button type="button" data-v="Vivo">Vivo</button>
+            <button type="button" data-v="Tecno">Tecno</button>
+            <button type="button" data-v="Infinix">Infinix</button>
+            <button type="button" class="other" data-other>Otra…</button>
+          </div>
+          <input class="other-input" data-other-for="marca" hidden placeholder="Especificar marca"></label>
         <label class="field"><span>Modelo</span><input data-k="modelo" placeholder="Galaxy A15"></label>
-        <label class="field"><span>Color</span><input data-k="color"></label>
         <label class="field"><span>N° IMEI (15 dígitos)</span><input data-k="imei_num" inputmode="numeric" maxlength="20"></label>
-        <label class="field"><span>Estado (RENTESEG)</span><input data-k="estado_dispositivo" placeholder="ROBADO / HURTADO / NORMAL"></label>
-        <label class="field"><span>Empresa operadora</span><input data-k="operadora" placeholder="Claro / Movistar / Entel"></label>
+        <label class="field full"><span>Color</span>
+          <div class="chips" data-chip="color">
+            <button type="button" data-v="Negro">Negro</button>
+            <button type="button" data-v="Blanco">Blanco</button>
+            <button type="button" data-v="Azul">Azul</button>
+            <button type="button" data-v="Celeste">Celeste</button>
+            <button type="button" data-v="Gris">Gris</button>
+            <button type="button" data-v="Plateado">Plata</button>
+            <button type="button" data-v="Dorado">Dorado</button>
+            <button type="button" data-v="Verde">Verde</button>
+            <button type="button" data-v="Rojo">Rojo</button>
+            <button type="button" data-v="Morado">Morado</button>
+            <button type="button" class="other" data-other>Otro…</button>
+          </div>
+          <input class="other-input" data-other-for="color" hidden placeholder="Especificar color"></label>
+        <label class="field full"><span>Estado (RENTESEG)</span>
+          <div class="chips" data-chip="estado_dispositivo">
+            <button type="button" data-v="ROBADO">Robado</button>
+            <button type="button" data-v="HURTADO">Hurtado</button>
+            <button type="button" data-v="NORMAL">Normal</button>
+            <button type="button" data-v="NO REGISTRADO">No registrado</button>
+            <button type="button" class="other" data-other>Otro…</button>
+          </div>
+          <input class="other-input" data-other-for="estado_dispositivo" hidden placeholder="Especificar estado"></label>
+        <label class="field full"><span>Empresa operadora</span>
+          <div class="chips" data-chip="operadora">
+            <button type="button" data-v="Claro">Claro</button>
+            <button type="button" data-v="Movistar">Movistar</button>
+            <button type="button" data-v="Entel">Entel</button>
+            <button type="button" data-v="Bitel">Bitel</button>
+            <button type="button" class="other" data-other>Otra…</button>
+          </div>
+          <input class="other-input" data-other-for="operadora" hidden placeholder="Especificar operadora"></label>
         <label class="field"><span>Chip / SIM</span>
           <div class="seg" data-seg="chip"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
         <label class="field"><span>Equipo</span>
@@ -236,9 +288,27 @@
       <div class="grid">
         <div class="subhead">Datos personales del intervenido</div>
         <label class="field"><span>Natural de</span><input data-k="natural"></label>
-        <label class="field"><span>Estado civil</span><input data-k="estado_civil"></label>
+        <label class="field full"><span>Estado civil</span>
+          <div class="chips" data-chip="estado_civil">
+            <button type="button" data-v="Soltero(a)">Soltero(a)</button>
+            <button type="button" data-v="Casado(a)">Casado(a)</button>
+            <button type="button" data-v="Conviviente">Conviviente</button>
+            <button type="button" data-v="Divorciado(a)">Divorciado(a)</button>
+            <button type="button" data-v="Viudo(a)">Viudo(a)</button>
+            <button type="button" class="other" data-other>Otro…</button>
+          </div>
+          <input class="other-input" data-other-for="estado_civil" hidden placeholder="Especificar"></label>
         <label class="field"><span>Fecha de nacimiento</span><input data-k="nacimiento"></label>
-        <label class="field"><span>Grado de instrucción</span><input data-k="instruccion"></label>
+        <label class="field full"><span>Grado de instrucción</span>
+          <div class="chips" data-chip="instruccion">
+            <button type="button" data-v="Sin instrucción">Sin instrucción</button>
+            <button type="button" data-v="Primaria">Primaria</button>
+            <button type="button" data-v="Secundaria">Secundaria</button>
+            <button type="button" data-v="Técnica">Técnica</button>
+            <button type="button" data-v="Superior">Superior</button>
+            <button type="button" class="other" data-other>Otro…</button>
+          </div>
+          <input class="other-input" data-other-for="instruccion" hidden placeholder="Especificar"></label>
         <label class="field"><span>Padre (Don)</span><input data-k="padre"></label>
         <label class="field"><span>Madre (Doña)</span><input data-k="madre"></label>
         <label class="field"><span>Profesión / ocupación</span><input data-k="ocupacion"></label>
@@ -259,9 +329,27 @@
 
         <div class="subhead">Lectura de derechos</div>
         <label class="field"><span>Comunicar detención a</span><input data-k="comunicar_a"></label>
-        <label class="field"><span>Parentesco</span><input data-k="parentesco"></label>
+        <label class="field full"><span>Parentesco</span>
+          <div class="chips" data-chip="parentesco">
+            <button type="button" data-v="Padre">Padre</button>
+            <button type="button" data-v="Madre">Madre</button>
+            <button type="button" data-v="Hermano(a)">Hermano(a)</button>
+            <button type="button" data-v="Esposo(a)">Esposo(a)</button>
+            <button type="button" data-v="Conviviente">Conviviente</button>
+            <button type="button" data-v="Hijo(a)">Hijo(a)</button>
+            <button type="button" data-v="Amigo(a)">Amigo(a)</button>
+            <button type="button" class="other" data-other>Otro…</button>
+          </div>
+          <input class="other-input" data-other-for="parentesco" hidden placeholder="Especificar"></label>
         <label class="field"><span>Teléfono contacto</span><input data-k="comunicar_telefono" inputmode="tel"></label>
-        <label class="field"><span>Intérprete (idioma)</span><input data-k="interprete_idioma" placeholder="No requiere"></label>
+        <label class="field full"><span>Intérprete (idioma)</span>
+          <div class="chips" data-chip="interprete_idioma">
+            <button type="button" data-v="No requiere">No requiere</button>
+            <button type="button" data-v="Quechua">Quechua</button>
+            <button type="button" data-v="Aimara">Aimara</button>
+            <button type="button" class="other" data-other>Otro…</button>
+          </div>
+          <input class="other-input" data-other-for="interprete_idioma" hidden placeholder="Especificar idioma"></label>
         <label class="field"><span>¿Abogado defensor?</span>
           <div class="seg" data-seg="abogado_defensor"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
         <label class="field"><span>Tel. abogado</span><input data-k="abogado_telefono" inputmode="tel"></label>
@@ -349,8 +437,22 @@ function init(){
       updateProgress();persist();
     }));
   });
-
-  loadProfile();
+  document.querySelectorAll('.chips').forEach(group=>{
+    const key=group.dataset.chip;
+    const otherInput=document.querySelector('[data-other-for="'+key+'"]');
+    group.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      group.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      if(b.hasAttribute('data-other')){
+        if(otherInput){otherInput.hidden=false;otherInput.focus();data[key]=otherInput.value||'';}
+      }else{
+        if(otherInput){otherInput.hidden=true;otherInput.value='';}
+        data[key]=b.dataset.v;
+      }
+      updateProgress();persist();
+    }));
+    if(otherInput) otherInput.addEventListener('input',()=>{data[key]=otherInput.value;updateProgress();persist();});
+  });
   loadCase();
   autoDateTime();
   applyToForm();
@@ -383,6 +485,14 @@ function loadCase(){let r=null;try{r=localStorage.getItem(CKEY);}catch(e){}if(!r
 function applyToForm(){
   document.querySelectorAll('[data-k]').forEach(el=>{if(data[el.dataset.k]!=null)el.value=data[el.dataset.k];});
   document.querySelectorAll('[data-seg]').forEach(seg=>{const v=data[seg.dataset.seg];seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v&&!!v));});
+  document.querySelectorAll('.chips').forEach(group=>{
+    const key=group.dataset.chip,v=data[key];
+    const otherInput=document.querySelector('[data-other-for="'+key+'"]');
+    let matched=false;
+    group.querySelectorAll('button').forEach(b=>{const on=!b.hasAttribute('data-other')&&b.dataset.v===v&&!!v;b.classList.toggle('on',on);if(on)matched=true;});
+    if(v&&!matched){const ob=group.querySelector('[data-other]');if(ob)ob.classList.add('on');if(otherInput){otherInput.hidden=false;otherInput.value=v;}}
+    else if(otherInput){otherInput.hidden=true;if(matched)otherInput.value='';}
+  });
   document.querySelectorAll('[data-acta]').forEach(c=>{const a=ACTAS.find(x=>x.id===c.dataset.acta);if(a)c.checked=a.on;});
 }
 function refreshPerfilTag(){
