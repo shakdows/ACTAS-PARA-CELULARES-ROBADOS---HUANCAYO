@@ -3,113 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Generador de Actas · Receptación de Equipos Móviles · PNP Huancayo</title>
+<title>Generador de Actas · Receptación · PNP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pnp-green:#0c4a2f;
-    --pnp-green-2:#10663f;
-    --pnp-gold:#c8a14b;
-    --ink:#15201b;
-    --paper:#f4f6f4;
-    --card:#ffffff;
-    --line:#d7ddd8;
-    --muted:#5b6b62;
-    --danger:#9b2222;
-    --ok:#137a3e;
-    --radius:14px;
+    --pnp-green:#0c4a2f;--pnp-green-2:#10663f;--pnp-gold:#c8a14b;
+    --ink:#15201b;--paper:#f4f6f4;--card:#fff;--line:#d7ddd8;--muted:#5b6b62;
+    --danger:#9b2222;--ok:#137a3e;--radius:14px;
     --shadow:0 1px 2px rgba(12,74,47,.06),0 8px 24px rgba(12,74,47,.08);
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{
-    font-family:'Archivo',system-ui,sans-serif;
-    background:
-      radial-gradient(1200px 500px at 100% -10%, rgba(16,102,63,.10), transparent 60%),
-      var(--paper);
-    color:var(--ink);
-    -webkit-text-size-adjust:100%;
-  }
+  body{font-family:'Archivo',system-ui,sans-serif;
+    background:radial-gradient(1200px 500px at 100% -10%,rgba(16,102,63,.10),transparent 60%),var(--paper);
+    color:var(--ink);-webkit-text-size-adjust:100%;}
 
-  /* ====== TOP BAR ====== */
-  header.app{
-    position:sticky;top:0;z-index:40;
-    background:linear-gradient(135deg,var(--pnp-green),var(--pnp-green-2));
-    color:#fff;
-    padding:calc(env(safe-area-inset-top) + 14px) 18px 14px;
-    box-shadow:0 2px 18px rgba(12,74,47,.25);
-  }
+  header.app{position:sticky;top:0;z-index:40;
+    background:linear-gradient(135deg,var(--pnp-green),var(--pnp-green-2));color:#fff;
+    padding:calc(env(safe-area-inset-top) + 12px) 18px 12px;box-shadow:0 2px 18px rgba(12,74,47,.25);}
   header.app .row{display:flex;align-items:center;gap:14px;max-width:880px;margin:0 auto}
-  .crest{
-    width:46px;height:46px;flex:0 0 46px;border-radius:12px;
-    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.25);
-    display:grid;place-items:center;font-weight:800;font-size:13px;letter-spacing:.5px;
-    color:var(--pnp-gold);
-  }
-  header.app h1{font-size:17px;margin:0;font-weight:700;line-height:1.15}
+  .crest{width:44px;height:44px;flex:0 0 44px;border-radius:12px;background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--pnp-gold)}
+  header.app h1{font-size:16px;margin:0;font-weight:700;line-height:1.15}
   header.app p{margin:2px 0 0;font-size:12px;opacity:.85;font-weight:500}
 
-  /* ====== TOOLBAR ====== */
-  .toolbar{
-    position:sticky;top:74px;z-index:30;
-    background:rgba(244,246,244,.92);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-    padding:10px 14px;
-  }
+  .toolbar{position:sticky;top:70px;z-index:30;background:rgba(244,246,244,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:9px 14px;}
   .toolbar .wrap{max-width:880px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .progress{flex:1 1 160px;min-width:140px}
-  .progress .bar{height:8px;border-radius:99px;background:#dfe6e0;overflow:hidden}
+  .progress{flex:1 1 140px;min-width:130px}
+  .progress .bar{height:7px;border-radius:99px;background:#dfe6e0;overflow:hidden}
   .progress .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pnp-green-2),var(--pnp-gold));transition:width .3s}
   .progress small{font-size:11px;color:var(--muted);display:block;margin-top:3px;font-weight:600}
 
   button{font-family:inherit;cursor:pointer;border:none}
-  .btn{
-    border-radius:10px;padding:9px 13px;font-size:13px;font-weight:600;
-    background:#fff;color:var(--pnp-green);border:1px solid var(--line);
-    display:inline-flex;align-items:center;gap:6px;line-height:1;
-  }
+  .btn{border-radius:10px;padding:8px 12px;font-size:13px;font-weight:600;background:#fff;color:var(--pnp-green);
+    border:1px solid var(--line);display:inline-flex;align-items:center;gap:6px;line-height:1}
   .btn:active{transform:translateY(1px)}
-  .btn.ghost{background:transparent}
-  .btn.warn{color:var(--danger);border-color:#e7c9c9}
+  .btn.ghost{background:transparent}.btn.warn{color:var(--danger);border-color:#e7c9c9}
   .btn svg{width:15px;height:15px}
 
-  main{max-width:880px;margin:0 auto;padding:18px 14px 120px}
+  main{max-width:880px;margin:0 auto;padding:16px 14px 120px}
 
-  /* ====== SECTIONS ====== */
-  details.sec{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden;
-  }
-  details.sec>summary{
-    list-style:none;cursor:pointer;padding:15px 16px;
-    display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px;
-  }
+  .note{background:#eaf3ec;border:1px solid #cfe3d5;color:#214d35;border-radius:12px;
+    padding:11px 14px;font-size:13px;font-weight:600;margin-bottom:14px;display:flex;gap:9px;align-items:flex-start}
+  .note b{font-weight:800}
+
+  details.sec{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+  details.sec>summary{list-style:none;cursor:pointer;padding:15px 16px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px}
   details.sec>summary::-webkit-details-marker{display:none}
-  .secnum{
-    flex:0 0 28px;height:28px;border-radius:8px;background:var(--pnp-green);color:#fff;
-    display:grid;place-items:center;font-size:13px;font-weight:800;
-  }
-  details.sec>summary .chev{margin-left:auto;transition:transform .25s;color:var(--muted)}
+  .secnum{flex:0 0 28px;height:28px;border-radius:8px;background:var(--pnp-green);color:#fff;
+    display:grid;place-items:center;font-size:14px;font-weight:800}
+  .secnum.opt{background:#e7ad33;color:#3a2c08}
+  .secnum.cfg{background:#3a4a42}
+  details.sec>summary .meta{margin-left:auto;display:flex;align-items:center;gap:8px}
+  details.sec>summary .chev{transition:transform .25s;color:var(--muted)}
   details.sec[open]>summary .chev{transform:rotate(180deg)}
-  details.sec>summary .tag{font-size:11px;font-weight:600;color:var(--muted);background:#eef2ef;padding:3px 8px;border-radius:99px;margin-left:auto}
-  details.sec>summary .chev{margin-left:8px}
+  .tag{font-size:11px;font-weight:700;color:var(--muted);background:#eef2ef;padding:3px 9px;border-radius:99px}
+  .tag.ok{background:#dcefe2;color:#1c6b3c}
   .secbody{padding:4px 16px 18px;border-top:1px solid var(--line)}
 
-  .grid{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:14px}
+  .grid{display:grid;gap:11px;grid-template-columns:1fr 1fr;margin-top:14px}
   .grid .full{grid-column:1/-1}
   @media (max-width:560px){.grid{grid-template-columns:1fr}}
+  .subhead{grid-column:1/-1;font-size:12px;font-weight:800;color:var(--pnp-green);text-transform:uppercase;letter-spacing:.5px;margin:6px 0 -2px}
 
   label.field{display:block}
   label.field>span{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
-  input,select,textarea{
-    width:100%;font-family:inherit;font-size:15px;color:var(--ink);
-    padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fcfdfc;
-    transition:border-color .15s,box-shadow .15s;
-  }
+  input,select,textarea{width:100%;font-family:inherit;font-size:16px;color:var(--ink);
+    padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fcfdfc;transition:border-color .15s,box-shadow .15s}
   input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pnp-green-2);box-shadow:0 0 0 3px rgba(16,102,63,.12)}
-  textarea{resize:vertical;min-height:78px;line-height:1.45}
+  textarea{resize:vertical;min-height:70px;line-height:1.45}
   .hint{font-size:11px;color:var(--muted);margin-top:4px}
 
   .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fcfdfc}
@@ -117,48 +83,32 @@
   .seg button:last-child{border-right:none}
   .seg button.on{background:var(--pnp-green);color:#fff}
 
-  /* selección de actas */
+  .timerow{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-top:14px}
+  .timerow .field{flex:1 1 30%}
+
   .actas-pick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
   @media (max-width:560px){.actas-pick{grid-template-columns:1fr}}
   .pick{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fcfdfc;font-size:13px;font-weight:600}
   .pick input{width:18px;height:18px;accent-color:var(--pnp-green)}
 
-  /* barra de acción fija */
-  .fab{
-    position:fixed;left:0;right:0;bottom:0;z-index:35;
-    background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
-    border-top:1px solid var(--line);
-    padding:12px 14px calc(env(safe-area-inset-bottom) + 12px);
-  }
+  .fab{position:fixed;left:0;right:0;bottom:0;z-index:35;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:12px 14px calc(env(safe-area-inset-bottom) + 12px)}
   .fab .wrap{max-width:880px;margin:0 auto;display:flex;gap:10px}
-  .btn.primary{
-    flex:1;justify-content:center;background:linear-gradient(135deg,var(--pnp-green),var(--pnp-green-2));
-    color:#fff;border:none;font-size:15px;padding:14px;box-shadow:0 6px 18px rgba(12,74,47,.28);
-  }
+  .btn.primary{flex:1;justify-content:center;background:linear-gradient(135deg,var(--pnp-green),var(--pnp-green-2));
+    color:#fff;border:none;font-size:16px;padding:14px;box-shadow:0 6px 18px rgba(12,74,47,.28)}
 
-  /* ====== VISTA DOCUMENTOS ====== */
-  #viewer{display:none}
-  #viewer.show{display:block}
+  #viewer{display:none}#viewer.show{display:block}
   body.viewing header.app,body.viewing .toolbar,body.viewing #form,body.viewing .fab{display:none !important}
-  .docbar{
-    position:sticky;top:0;z-index:40;background:linear-gradient(135deg,var(--pnp-green),var(--pnp-green-2));
-    color:#fff;padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;
-    display:flex;gap:8px;align-items:center;flex-wrap:wrap;
-  }
+  .docbar{position:sticky;top:0;z-index:40;background:linear-gradient(135deg,var(--pnp-green),var(--pnp-green-2));color:#fff;
+    padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .docbar .btn{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
-  .docbar .btn.primary{background:var(--pnp-gold);color:#3a2c08;border:none;font-weight:700}
-  .docbar h2{font-size:14px;margin:0 8px 0 0;font-weight:700}
+  .docbar .btn.primary{background:var(--pnp-gold);color:#3a2c08;border:none;font-weight:700;flex:0}
+  .docbar h2{font-size:14px;margin:0 6px 0 0;font-weight:700}
   .docscroll{padding:18px 10px 60px;background:#e9ece9}
 
-  /* HOJA DE DOCUMENTO */
-  .sheet{
-    background:#fff;width:100%;max-width:780px;margin:0 auto 18px;
-    padding:46px 54px;box-shadow:0 4px 22px rgba(0,0,0,.14);
-    font-family:'Tinos',Georgia,'Times New Roman',serif;color:#000;
-    font-size:13.5px;line-height:1.55;text-align:justify;
-  }
+  .sheet{background:#fff;width:100%;max-width:780px;margin:0 auto 18px;padding:46px 54px;box-shadow:0 4px 22px rgba(0,0,0,.14);
+    font-family:'Tinos',Georgia,'Times New Roman',serif;color:#000;font-size:13.5px;line-height:1.55;text-align:justify}
   .sheet h3{font-family:'Tinos',serif;text-align:center;font-size:16px;font-weight:700;text-transform:uppercase;margin:0 0 16px;letter-spacing:.3px}
-  .sheet .docnum{text-align:center;font-weight:700;margin:-8px 0 18px;font-size:14px}
   .sheet p{margin:0 0 11px}
   .sheet .fill{font-weight:700;border-bottom:1px solid #000;padding:0 2px;white-space:pre-wrap}
   .sheet .blank{display:inline-block;border-bottom:1px solid #000;min-width:90px}
@@ -169,25 +119,18 @@
   .sheet .sign{display:flex;justify-content:space-between;gap:30px;margin-top:42px;text-align:center}
   .sheet .sign .col{flex:1}
   .sheet .sign .ln{border-top:1px solid #000;margin-top:36px;padding-top:4px;font-size:12px;font-weight:700}
-  .sheet ul{margin:6px 0 11px;padding-left:22px}
-  .sheet ul li{margin-bottom:6px}
+  .sheet ul{margin:6px 0 11px;padding-left:22px}.sheet ul li{margin-bottom:6px}
   .sheet .ck{font-weight:700;font-family:'Archivo',sans-serif}
-  .pagebreak{page-break-after:always}
 
-  .toast{
-    position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);
-    background:var(--ink);color:#fff;padding:11px 18px;border-radius:99px;font-size:13px;font-weight:600;
-    opacity:0;pointer-events:none;transition:.25s;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.25);
-  }
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;
+    padding:11px 18px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.25)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   @media print{
     header.app,.toolbar,.fab,.docbar,main,.toast{display:none !important}
-    body{background:#fff}
-    #viewer{display:block !important}
+    body{background:#fff}#viewer{display:block !important}
     .docscroll{padding:0;background:#fff}
-    .sheet{box-shadow:none;margin:0;max-width:none;width:100%;padding:0 6mm;
-      page-break-after:always;font-size:12pt}
+    .sheet{box-shadow:none;margin:0;max-width:none;width:100%;padding:0 6mm;page-break-after:always;font-size:12pt}
     .sheet:last-child{page-break-after:auto}
     @page{size:A4;margin:14mm}
   }
@@ -200,7 +143,7 @@
     <div class="crest">PNP</div>
     <div>
       <h1>Generador de Actas · Receptación</h1>
-      <p>Verificación de IMEI (OSIPTEL · RENTESEG) — Región Policial Junín / Huancayo</p>
+      <p>Verificación de IMEI · OSIPTEL / RENTESEG — Huancayo</p>
     </div>
   </div>
 </header>
@@ -209,165 +152,142 @@
   <div class="wrap">
     <div class="progress">
       <div class="bar"><i id="progbar"></i></div>
-      <small id="progtxt">0 campos completados</small>
+      <small id="progtxt">Caso nuevo</small>
     </div>
-    <button class="btn ghost" onclick="saveDraft()" title="Guardar en este dispositivo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Guardar
-    </button>
-    <button class="btn ghost" onclick="exportDraft()" title="Descargar respaldo .json">Respaldo</button>
-    <label class="btn ghost" title="Cargar respaldo .json" style="margin:0">Cargar<input type="file" accept=".json" onchange="importDraft(event)" hidden></label>
-    <button class="btn warn ghost" onclick="clearAll()">Limpiar</button>
+    <button class="btn ghost" onclick="exportDraft()">Respaldo</button>
+    <label class="btn ghost" style="margin:0">Cargar<input type="file" accept=".json" onchange="importDraft(event)" hidden></label>
+    <button class="btn warn ghost" onclick="newCase()">Caso nuevo</button>
   </div>
 </div>
 
 <main id="form">
 
-  <!-- 1. DEPENDENCIA Y PERSONAL -->
+  <div class="note">
+    <span>✅</span>
+    <span><b>Llena solo lo esencial.</b> Tu perfil se guarda una vez y ya no lo reescribes. Lo que dejes vacío saldrá como línea en blanco en el acta para completar a mano.</span>
+  </div>
+
+  <!-- PERFIL (UNA SOLA VEZ) -->
+  <details class="sec" id="secPerfil">
+    <summary>
+      <span class="secnum cfg">★</span> Mi perfil <span class="meta"><span class="tag" id="perfilTag">Configurar</span><span class="chev">▾</span></span>
+    </summary>
+    <div class="secbody">
+      <p class="hint" style="margin-top:10px">Se guarda en este equipo. No se borra al iniciar un caso nuevo.</p>
+      <div class="grid">
+        <label class="field full"><span>Instructor (Apellidos y Nombres)</span><input data-k="instructor" data-profile placeholder="SOT3 PNP ..."></label>
+        <label class="field"><span>CIP N°</span><input data-k="instructor_cip" data-profile inputmode="numeric"></label>
+        <label class="field"><span>Cargo</span><input data-k="servidor_cargo" data-profile value="Instructor"></label>
+        <label class="field full"><span>Comisaría PNP</span><input data-k="comisaria" data-profile placeholder="Comisaría PNP El Tambo"></label>
+        <label class="field"><span>Distrito</span><input data-k="distrito" data-profile placeholder="El Tambo"></label>
+        <label class="field"><span>Provincia</span><input data-k="provincia" data-profile value="Huancayo"></label>
+        <label class="field full"><span>Unidad / Dependencia / División</span><input data-k="unidad" data-profile placeholder="DEPINCRI / Sección de Investigación"></label>
+        <label class="field full"><span>Bajo el mando de</span><input data-k="jefe" data-profile></label>
+        <label class="field full"><span>Operativo Policial (nombre habitual)</span><input data-k="operativo" data-profile placeholder='"IMPACTO SEGURO 2026"'></label>
+        <label class="field"><span>Distrito Fiscal</span><input data-k="distrito_fiscal" data-profile value="Junín"></label>
+        <label class="field"><span>Ciudad</span><input data-k="ciudad" data-profile value="Huancayo"></label>
+        <label class="field full"><span>Segundo efectivo (opcional)</span><input data-k="efectivo2" data-profile></label>
+        <label class="field full"><span>CIP N° del 2.º efectivo (opcional)</span><input data-k="efectivo2_cip" data-profile inputmode="numeric"></label>
+      </div>
+      <button class="btn" style="margin-top:12px;background:var(--pnp-green);color:#fff;border:none" onclick="saveProfile()">Guardar perfil</button>
+    </div>
+  </details>
+
+  <!-- CASO: ESENCIAL -->
   <details class="sec" open>
-    <summary><span class="secnum">1</span> Dependencia y personal interviniente <span class="chev">▾</span></summary>
+    <summary><span class="secnum">1</span> Datos del caso <span class="meta"><span class="tag ok">Lo esencial</span><span class="chev">▾</span></span></summary>
     <div class="secbody">
-      <div class="grid">
-        <label class="field"><span>Distrito</span><input data-k="distrito" placeholder="El Tambo"></label>
-        <label class="field"><span>Provincia</span><input data-k="provincia" value="Huancayo"></label>
-        <label class="field full"><span>Comisaría PNP</span><input data-k="comisaria" placeholder="Comisaría PNP El Tambo"></label>
-        <label class="field full"><span>Unidad / Dependencia / División</span><input data-k="unidad" placeholder="DEPINCRI / Sección de Investigación"></label>
-        <label class="field"><span>Instructor (Apellidos y Nombres)</span><input data-k="instructor" placeholder="SOT3 PNP ..."></label>
-        <label class="field"><span>CIP N° del Instructor</span><input data-k="instructor_cip" inputmode="numeric"></label>
-        <label class="field"><span>Segundo efectivo (opcional)</span><input data-k="efectivo2"></label>
-        <label class="field"><span>CIP N° del 2.º efectivo</span><input data-k="efectivo2_cip" inputmode="numeric"></label>
-        <label class="field full"><span>Bajo el mando de</span><input data-k="jefe" placeholder="CMDTE PNP ..."></label>
-      </div>
-    </div>
-  </details>
 
-  <!-- 2. OPERATIVO E INTERVENCIÓN -->
-  <details class="sec">
-    <summary><span class="secnum">2</span> Operativo e intervención <span class="chev">▾</span></summary>
-    <div class="secbody">
-      <div class="grid">
-        <label class="field full"><span>Nombre del Operativo Policial</span><input data-k="operativo" placeholder='"IMPACTO SEGURO 2026"'></label>
-        <label class="field full"><span>Lugar de la intervención</span><input data-k="lugar" placeholder="Jr. ... cuadra ..., El Tambo"></label>
-        <label class="field"><span>Fecha de la intervención</span><input data-k="fecha" placeholder="03 de junio del 2026"></label>
-        <label class="field"><span>Hora de inicio (diligencia)</span><input data-k="hora_inicio" placeholder="10:30"></label>
-        <label class="field"><span>Hora aprox. de intervención</span><input data-k="hora_aprox" placeholder="10:15"></label>
-        <label class="field"><span>Hora de conclusión</span><input data-k="hora_fin" placeholder="11:45"></label>
+      <div class="timerow">
+        <label class="field"><span>Fecha</span><input data-k="fecha"></label>
+        <label class="field"><span>Hora intervención</span><input data-k="hora_aprox" placeholder="10:15"></label>
+        <label class="field"><span>Hora conclusión</span><input data-k="hora_fin" placeholder="11:45"></label>
       </div>
-    </div>
-  </details>
+      <p class="hint">La fecha y hora se completan solas con hoy/ahora. Cámbialas si hace falta.</p>
 
-  <!-- 3. INTERVENIDO -->
-  <details class="sec">
-    <summary><span class="secnum">3</span> Datos del intervenido / detenido <span class="chev">▾</span></summary>
-    <div class="secbody">
       <div class="grid">
+        <div class="subhead">Persona intervenida</div>
         <label class="field full"><span>Apellidos y Nombres</span><input data-k="nombre" placeholder="PÉREZ QUISPE, Juan Carlos"></label>
-        <label class="field"><span>Sexo</span>
-          <div class="seg" data-seg="sexo">
-            <button type="button" data-v="(M)">Masculino</button>
-            <button type="button" data-v="(F)">Femenino</button>
-          </div></label>
         <label class="field"><span>DNI N°</span><input data-k="dni" inputmode="numeric"></label>
-        <label class="field"><span>Natural de</span><input data-k="natural"></label>
-        <label class="field"><span>Estado civil</span><input data-k="estado_civil"></label>
-        <label class="field"><span>Fecha de nacimiento</span><input data-k="nacimiento" placeholder="12/05/1998"></label>
-        <label class="field"><span>Grado de instrucción</span><input data-k="instruccion"></label>
-        <label class="field"><span>Nombre del padre (Don)</span><input data-k="padre"></label>
-        <label class="field"><span>Nombre de la madre (Doña)</span><input data-k="madre"></label>
-        <label class="field"><span>Profesión / ocupación</span><input data-k="ocupacion"></label>
-        <label class="field"><span>Teléfono celular</span><input data-k="celular" inputmode="tel"></label>
-        <label class="field full"><span>Correo electrónico</span><input data-k="correo" inputmode="email"></label>
-        <label class="field full"><span>Domicilio actual</span><input data-k="domicilio"></label>
-      </div>
-    </div>
-  </details>
+        <label class="field"><span>Sexo</span>
+          <div class="seg" data-seg="sexo"><button type="button" data-v="(M)">M</button><button type="button" data-v="(F)">F</button></div></label>
+        <label class="field full"><span>Lugar de la intervención</span><input data-k="lugar" placeholder="Jr. ... cuadra ..., El Tambo"></label>
 
-  <!-- 4. EQUIPO MÓVIL -->
-  <details class="sec">
-    <summary><span class="secnum">4</span> Equipo móvil y verificación IMEI <span class="chev">▾</span></summary>
-    <div class="secbody">
-      <div class="grid">
+        <div class="subhead">Equipo móvil</div>
         <label class="field"><span>Marca</span><input data-k="marca" placeholder="Samsung"></label>
         <label class="field"><span>Modelo</span><input data-k="modelo" placeholder="Galaxy A15"></label>
         <label class="field"><span>Color</span><input data-k="color"></label>
-        <label class="field"><span>N° telefónico del equipo</span><input data-k="num_telefonico" inputmode="tel"></label>
-        <label class="field"><span>N.° de IMEI (cuál)</span><input data-k="imei_slot" placeholder="1" inputmode="numeric"></label>
-        <label class="field"><span>Numeración IMEI (15 dígitos)</span><input data-k="imei_num" inputmode="numeric" maxlength="20"></label>
-        <label class="field"><span>Estado del dispositivo (RENTESEG)</span><input data-k="estado_dispositivo" placeholder="ROBADO / HURTADO / NORMAL"></label>
-        <label class="field"><span>Empresa operadora</span><input data-k="operadora"></label>
-        <label class="field"><span>Fecha de consulta OSIPTEL</span><input data-k="fecha_consulta"></label>
-        <label class="field"><span>Reportado como</span><input data-k="reportado_como" placeholder="ROBADO / HURTADO"></label>
+        <label class="field"><span>N° IMEI (15 dígitos)</span><input data-k="imei_num" inputmode="numeric" maxlength="20"></label>
+        <label class="field"><span>Estado (RENTESEG)</span><input data-k="estado_dispositivo" placeholder="ROBADO / HURTADO / NORMAL"></label>
+        <label class="field"><span>Empresa operadora</span><input data-k="operadora" placeholder="Claro / Movistar / Entel"></label>
         <label class="field"><span>Chip / SIM</span>
           <div class="seg" data-seg="chip"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
-        <label class="field"><span>Estado del equipo</span>
+        <label class="field"><span>Equipo</span>
           <div class="seg" data-seg="estado_equipo"><button type="button" data-v="ENCENDIDO">Encendido</button><button type="button" data-v="APAGADO">Apagado</button></div></label>
       </div>
     </div>
   </details>
 
-  <!-- 5. CADENA DE CUSTODIA -->
-  <details class="sec">
-    <summary><span class="secnum">5</span> Incautación · cadena de custodia (Formato A-6) <span class="chev">▾</span></summary>
+  <!-- CASO: OPCIONAL -->
+  <details class="sec" id="secOpc">
+    <summary><span class="secnum opt">+</span> Datos adicionales <span class="meta"><span class="tag">Opcional</span><span class="chev">▾</span></span></summary>
     <div class="secbody">
+      <p class="hint" style="margin-top:10px">Solo si los tienes a la mano. Lo vacío queda como línea en blanco en el acta.</p>
       <div class="grid">
-        <label class="field full"><span>Descripción del lacrado / rotulado</span><textarea data-k="lacrado_desc" placeholder="Se introduce el equipo en mica transparente N° ..., lacrada y rotulada..."></textarea></label>
-        <label class="field"><span>Distrito Fiscal</span><input data-k="distrito_fiscal"></label>
-        <label class="field"><span>N.° de Hallazgo</span><input data-k="num_hallazgo"></label>
-        <label class="field"><span>Cantidad</span><input data-k="cantidad" value="01"></label>
-        <label class="field"><span>Unidad de medida</span><input data-k="unidad_medida" value="Unidad"></label>
-        <label class="field full"><span>Descripción y condición (A-6)</span><textarea data-k="descripcion_condicion" placeholder="Equipo celular marca ..., modelo ..., color ..., IMEI ..., en regular estado de conservación."></textarea></label>
-        <label class="field full"><span>Tipo de embalaje utilizado</span><input data-k="tipo_embalaje" placeholder="Mica / bolsa de evidencia transparente"></label>
-        <label class="field"><span>Cargo del servidor que recolecta</span><input data-k="servidor_cargo" placeholder="Instructor"></label>
-        <label class="field"><span>Fecha de embalaje</span><input data-k="fecha_embalaje"></label>
-      </div>
-      <p class="hint">El nombre, DNI/CIP, dependencia y lugar del A-6 se completan automáticamente con los datos del Instructor y del operativo.</p>
-    </div>
-  </details>
+        <div class="subhead">Datos personales del intervenido</div>
+        <label class="field"><span>Natural de</span><input data-k="natural"></label>
+        <label class="field"><span>Estado civil</span><input data-k="estado_civil"></label>
+        <label class="field"><span>Fecha de nacimiento</span><input data-k="nacimiento"></label>
+        <label class="field"><span>Grado de instrucción</span><input data-k="instruccion"></label>
+        <label class="field"><span>Padre (Don)</span><input data-k="padre"></label>
+        <label class="field"><span>Madre (Doña)</span><input data-k="madre"></label>
+        <label class="field"><span>Profesión / ocupación</span><input data-k="ocupacion"></label>
+        <label class="field"><span>Celular</span><input data-k="celular" inputmode="tel"></label>
+        <label class="field full"><span>Correo electrónico</span><input data-k="correo" inputmode="email"></label>
+        <label class="field full"><span>Domicilio</span><input data-k="domicilio"></label>
 
-  <!-- 6. LECTURA DE DERECHOS -->
-  <details class="sec">
-    <summary><span class="secnum">6</span> Lectura de derechos del detenido <span class="chev">▾</span></summary>
-    <div class="secbody">
-      <div class="grid">
-        <label class="field"><span>Comunicar la detención a</span><input data-k="comunicar_a"></label>
+        <div class="subhead">Equipo / verificación</div>
+        <label class="field"><span>IMEI N° (1 ó 2)</span><input data-k="imei_slot" placeholder="1"></label>
+        <label class="field"><span>N° telefónico del equipo</span><input data-k="num_telefonico" inputmode="tel"></label>
+        <label class="field"><span>Reportado como</span><input data-k="reportado_como" placeholder="(igual que estado)"></label>
+        <label class="field"><span>Fecha consulta OSIPTEL</span><input data-k="fecha_consulta" placeholder="(igual que fecha)"></label>
+
+        <div class="subhead">Cadena de custodia (A-6)</div>
+        <label class="field full"><span>Descripción del lacrado / rotulado</span><textarea data-k="lacrado_desc"></textarea></label>
+        <label class="field"><span>N° de Hallazgo</span><input data-k="num_hallazgo"></label>
+        <label class="field"><span>Tipo de embalaje</span><input data-k="tipo_embalaje" placeholder="Mica transparente"></label>
+
+        <div class="subhead">Lectura de derechos</div>
+        <label class="field"><span>Comunicar detención a</span><input data-k="comunicar_a"></label>
         <label class="field"><span>Parentesco</span><input data-k="parentesco"></label>
-        <label class="field"><span>Teléfono de contacto</span><input data-k="comunicar_telefono" inputmode="tel"></label>
-        <label class="field"><span>Intérprete en el idioma</span><input data-k="interprete_idioma" placeholder="No requiere / Quechua / ..."></label>
+        <label class="field"><span>Teléfono contacto</span><input data-k="comunicar_telefono" inputmode="tel"></label>
+        <label class="field"><span>Intérprete (idioma)</span><input data-k="interprete_idioma" placeholder="No requiere"></label>
         <label class="field"><span>¿Abogado defensor?</span>
           <div class="seg" data-seg="abogado_defensor"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
-        <label class="field"><span>Teléfono del abogado</span><input data-k="abogado_telefono" inputmode="tel"></label>
+        <label class="field"><span>Tel. abogado</span><input data-k="abogado_telefono" inputmode="tel"></label>
         <label class="field"><span>¿Abogado de oficio?</span>
           <div class="seg" data-seg="abogado_oficio"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
-        <label class="field"><span>¿Ser examinado por médico?</span>
+        <label class="field"><span>¿Examen médico?</span>
           <div class="seg" data-seg="medico"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
+
+        <div class="subhead">Ministerio Público / registro</div>
+        <label class="field full"><span>Representante del M.P. (RMP)</span><input data-k="rmp"></label>
+        <label class="field"><span>Vía / medio</span><input data-k="rmp_via" placeholder="vía telefónica"></label>
+        <label class="field"><span>Teléfono RMP</span><input data-k="rmp_telefono" inputmode="tel"></label>
+        <label class="field full"><span>Testigos / presentes (registro)</span><input data-k="rp_presentes"></label>
       </div>
     </div>
   </details>
 
-  <!-- 7. MINISTERIO PÚBLICO Y REGISTRO -->
-  <details class="sec">
-    <summary><span class="secnum">7</span> Ministerio Público y registro personal <span class="chev">▾</span></summary>
-    <div class="secbody">
-      <div class="grid">
-        <label class="field full"><span>Representante del Ministerio Público (RMP)</span><input data-k="rmp"></label>
-        <label class="field"><span>Vía / medio de comunicación</span><input data-k="rmp_via" placeholder="vía telefónica"></label>
-        <label class="field"><span>Teléfono del RMP</span><input data-k="rmp_telefono" inputmode="tel"></label>
-        <label class="field"><span>Ciudad (registro personal)</span><input data-k="ciudad" value="Huancayo"></label>
-        <label class="field"><span>Testigos / presentes</span><input data-k="rp_presentes"></label>
-      </div>
-    </div>
-  </details>
-
-  <!-- 8. SELECCIÓN DE ACTAS -->
+  <!-- ACTAS -->
   <details class="sec" open>
-    <summary><span class="secnum">8</span> Actas a generar <span class="chev">▾</span></summary>
-    <div class="secbody">
-      <div class="actas-pick" id="actasPick"></div>
-    </div>
+    <summary><span class="secnum">2</span> Actas a generar <span class="meta"><span class="chev">▾</span></span></summary>
+    <div class="secbody"><div class="actas-pick" id="actasPick"></div></div>
   </details>
 
 </main>
 
-<div class="fab" id="fab">
+<div class="fab">
   <div class="wrap">
     <button class="btn primary" onclick="generate()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
@@ -376,11 +296,10 @@
   </div>
 </div>
 
-<!-- ====== VISOR DE DOCUMENTOS ====== -->
 <section id="viewer">
   <div class="docbar">
     <button class="btn" onclick="backToForm()">‹ Editar</button>
-    <h2>Actas generadas</h2>
+    <h2>Actas</h2>
     <button class="btn primary" onclick="window.print()">🖨 Imprimir / PDF</button>
     <button class="btn" onclick="sharePDF()">↗ Compartir</button>
     <button class="btn" onclick="shareWhatsAppText()">WhatsApp</button>
@@ -391,321 +310,277 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============ ESTADO ============ */
-const KEY='actas_pnp_huancayo_v1';
+const CKEY='actas_caso_v2', PKEY='actas_perfil_v2';
 const data={};
 const segs=['sexo','chip','estado_equipo','abogado_defensor','abogado_oficio','medico'];
+const profileKeys=[];
+
+const ESSENTIAL=['nombre','dni','sexo','lugar','marca','modelo','color','imei_num','estado_dispositivo','operadora'];
 
 const ACTAS=[
-  {id:'intervencion', name:'Acta de Intervención Policial', on:true},
-  {id:'consentimiento', name:'Acta de Consentimiento (verificación IMEI)', on:true},
-  {id:'incautacion', name:'Acta de Entrega, Recepción, Incautación y Lacrado', on:true},
-  {id:'detencion', name:'Acta de Detención', on:true},
-  {id:'derechos', name:'Acta de Lectura de Derechos', on:true},
-  {id:'buentrato', name:'Constancia de Buen Trato', on:true},
-  {id:'registro', name:'Acta de Registro Personal', on:true},
-  {id:'a6', name:'Formato A-6 (Cadena de Custodia)', on:true},
+  {id:'intervencion',name:'Acta de Intervención Policial',on:true},
+  {id:'consentimiento',name:'Acta de Consentimiento (IMEI)',on:true},
+  {id:'incautacion',name:'Acta de Incautación y Lacrado',on:true},
+  {id:'detencion',name:'Acta de Detención',on:true},
+  {id:'derechos',name:'Acta de Lectura de Derechos',on:true},
+  {id:'buentrato',name:'Constancia de Buen Trato',on:true},
+  {id:'registro',name:'Acta de Registro Personal',on:true},
+  {id:'a6',name:'Formato A-6 (Cadena de Custodia)',on:true},
 ];
 
-/* ============ INIT ============ */
+/* ---------- INIT ---------- */
 function init(){
-  // pick list
-  const pickWrap=document.getElementById('actasPick');
-  ACTAS.forEach(a=>{
-    const l=document.createElement('label');l.className='pick';
-    l.innerHTML=`<input type="checkbox" ${a.on?'checked':''} data-acta="${a.id}"> ${a.name}`;
-    pickWrap.appendChild(l);
-  });
-  pickWrap.addEventListener('change',e=>{
-    const id=e.target.getAttribute('data-acta');
-    const a=ACTAS.find(x=>x.id===id); if(a) a.on=e.target.checked;
-    persist();
-  });
-  // inputs
+  document.querySelectorAll('[data-profile]').forEach(el=>profileKeys.push(el.dataset.k));
+  const pick=document.getElementById('actasPick');
+  ACTAS.forEach(a=>{const l=document.createElement('label');l.className='pick';
+    l.innerHTML=`<input type="checkbox" ${a.on?'checked':''} data-acta="${a.id}"> ${a.name}`;pick.appendChild(l);});
+  pick.addEventListener('change',e=>{const id=e.target.getAttribute('data-acta');const a=ACTAS.find(x=>x.id===id);if(a)a.on=e.target.checked;persist();});
+
   document.querySelectorAll('[data-k]').forEach(el=>{
-    if(el.value && data[el.dataset.k]==null) data[el.dataset.k]=el.value; // capturar valores por defecto
+    if(el.value && data[el.dataset.k]==null) data[el.dataset.k]=el.value;
     el.addEventListener('input',()=>{data[el.dataset.k]=el.value;updateProgress();persist();});
   });
-  // segmented controls
   document.querySelectorAll('[data-seg]').forEach(seg=>{
     const key=seg.dataset.seg;
-    seg.querySelectorAll('button').forEach(b=>{
-      b.addEventListener('click',()=>{
-        const v=b.dataset.v;
-        if(data[key]===v){data[key]='';b.classList.remove('on');}
-        else{data[key]=v;seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
-        updateProgress();persist();
-      });
-    });
+    seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      const v=b.dataset.v;
+      if(data[key]===v){data[key]='';b.classList.remove('on');}
+      else{data[key]=v;seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
+      updateProgress();persist();
+    }));
   });
-  load();
-}
 
-/* ============ PERSISTENCIA (segura) ============ */
-function persist(){
-  try{localStorage.setItem(KEY,JSON.stringify({data,actas:ACTAS.map(a=>({id:a.id,on:a.on}))}));}catch(e){}
-}
-function load(){
-  let raw=null;try{raw=localStorage.getItem(KEY);}catch(e){}
-  if(!raw)return;
-  try{
-    const o=JSON.parse(raw);
-    Object.assign(data,o.data||{});
-    applyToForm();
-    if(o.actas)o.actas.forEach(s=>{const a=ACTAS.find(x=>x.id===s.id);if(a)a.on=s.on;});
-    document.querySelectorAll('[data-acta]').forEach(c=>{const a=ACTAS.find(x=>x.id===c.dataset.acta);if(a)c.checked=a.on;});
-  }catch(e){}
-}
-function applyToForm(){
-  document.querySelectorAll('[data-k]').forEach(el=>{if(data[el.dataset.k]!=null)el.value=data[el.dataset.k];});
-  document.querySelectorAll('[data-seg]').forEach(seg=>{
-    const v=data[seg.dataset.seg];
-    seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v&&!!v));
-  });
+  loadProfile();
+  loadCase();
+  autoDateTime();
+  applyToForm();
+  refreshPerfilTag();
   updateProgress();
 }
 
-function saveDraft(){persist();toast('Borrador guardado en este dispositivo');}
+/* ---------- FECHA / HORA AUTO ---------- */
+function autoDateTime(){
+  const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const n=new Date();
+  if(!data.fecha) data.fecha=`${String(n.getDate()).padStart(2,'0')} de ${M[n.getMonth()]} del ${n.getFullYear()}`;
+  const hhmm=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+  if(!data.hora_inicio) data.hora_inicio=hhmm;
+  if(!data.hora_aprox) data.hora_aprox=hhmm;
+}
+
+/* ---------- PERSISTENCIA ---------- */
+function pickKeys(obj,keys){const o={};keys.forEach(k=>{if(obj[k]!=null)o[k]=obj[k];});return o;}
+function persist(){
+  try{
+    localStorage.setItem(PKEY,JSON.stringify(pickKeys(data,profileKeys)));
+    const caseKeys=Object.keys(data).filter(k=>!profileKeys.includes(k));
+    localStorage.setItem(CKEY,JSON.stringify({data:pickKeys(data,caseKeys),actas:ACTAS.map(a=>({id:a.id,on:a.on}))}));
+  }catch(e){}
+}
+function loadProfile(){let r=null;try{r=localStorage.getItem(PKEY);}catch(e){}if(!r)return;try{Object.assign(data,JSON.parse(r)||{});}catch(e){}}
+function loadCase(){let r=null;try{r=localStorage.getItem(CKEY);}catch(e){}if(!r)return;try{const o=JSON.parse(r);Object.assign(data,o.data||{});if(o.actas)o.actas.forEach(s=>{const a=ACTAS.find(x=>x.id===s.id);if(a)a.on=s.on;});}catch(e){}}
+
+function applyToForm(){
+  document.querySelectorAll('[data-k]').forEach(el=>{if(data[el.dataset.k]!=null)el.value=data[el.dataset.k];});
+  document.querySelectorAll('[data-seg]').forEach(seg=>{const v=data[seg.dataset.seg];seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v&&!!v));});
+  document.querySelectorAll('[data-acta]').forEach(c=>{const a=ACTAS.find(x=>x.id===c.dataset.acta);if(a)c.checked=a.on;});
+}
+function refreshPerfilTag(){
+  const ok=data.instructor&&data.comisaria;
+  const t=document.getElementById('perfilTag');
+  if(ok){t.textContent='✓ '+(data.instructor.split(' ').slice(0,2).join(' '));t.classList.add('ok');document.getElementById('secPerfil').open=false;}
+  else{t.textContent='Configurar';t.classList.remove('ok');document.getElementById('secPerfil').open=true;}
+}
+function saveProfile(){persist();refreshPerfilTag();toast('Perfil guardado ✓');document.getElementById('secPerfil').open=false;window.scrollTo({top:0,behavior:'smooth'});}
+
 function exportDraft(){
   const blob=new Blob([JSON.stringify({data,actas:ACTAS.map(a=>({id:a.id,on:a.on}))},null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='acta_'+(data.dni||'borrador')+'.json';a.click();toast('Respaldo descargado');
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='acta_'+(data.dni||'borrador')+'.json';a.click();toast('Respaldo descargado');
 }
-function importDraft(ev){
-  const f=ev.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=()=>{try{const o=JSON.parse(r.result);for(const k in data)delete data[k];Object.assign(data,o.data||{});applyToForm();if(o.actas)o.actas.forEach(s=>{const a=ACTAS.find(x=>x.id===s.id);if(a)a.on=s.on;});document.querySelectorAll('[data-acta]').forEach(c=>{const a=ACTAS.find(x=>x.id===c.dataset.acta);if(a)c.checked=a.on;});persist();toast('Respaldo cargado');}catch(e){toast('Archivo inválido');}};
-  r.readAsText(f);ev.target.value='';
-}
-function clearAll(){
-  if(!confirm('¿Borrar todos los datos del formulario?'))return;
-  for(const k in data)delete data[k];
-  document.querySelectorAll('[data-k]').forEach(el=>el.value='');
+function importDraft(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const o=JSON.parse(r.result);Object.assign(data,o.data||{});if(o.actas)o.actas.forEach(s=>{const a=ACTAS.find(x=>x.id===s.id);if(a)a.on=s.on;});applyToForm();refreshPerfilTag();updateProgress();persist();toast('Respaldo cargado');}catch(e){toast('Archivo inválido');}};
+  r.readAsText(f);ev.target.value='';}
+
+function newCase(){
+  if(!confirm('¿Iniciar un caso nuevo? Se borran los datos del caso actual (tu perfil se conserva).'))return;
+  Object.keys(data).filter(k=>!profileKeys.includes(k)).forEach(k=>delete data[k]);
+  document.querySelectorAll('[data-k]').forEach(el=>{if(!profileKeys.includes(el.dataset.k))el.value='';});
   document.querySelectorAll('[data-seg] button').forEach(b=>b.classList.remove('on'));
-  try{localStorage.removeItem(KEY);}catch(e){}
-  updateProgress();toast('Formulario limpio');
+  try{localStorage.removeItem(CKEY);}catch(e){}
+  autoDateTime();applyToForm();updateProgress();
+  toast('Caso nuevo listo');window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ============ PROGRESO ============ */
+/* ---------- PROGRESO (solo esenciales) ---------- */
 function updateProgress(){
-  const inputs=document.querySelectorAll('[data-k]');
-  const total=inputs.length+segs.length;
-  let done=0;
-  inputs.forEach(el=>{if((data[el.dataset.k]||'').trim())done++;});
-  segs.forEach(s=>{if(data[s])done++;});
-  const pct=Math.round(done/total*100);
+  let done=0;ESSENTIAL.forEach(k=>{if((data[k]||'').toString().trim())done++;});
+  const pct=Math.round(done/ESSENTIAL.length*100);
   document.getElementById('progbar').style.width=pct+'%';
-  document.getElementById('progtxt').textContent=`${done} de ${total} campos · ${pct}%`;
+  document.getElementById('progtxt').textContent= done===ESSENTIAL.length?'Listo para generar ✓':`Esencial: ${done}/${ESSENTIAL.length}`;
 }
 
-/* ============ HELPERS DE PLANTILLA ============ */
-function f(key,minw){ // campo: valor resaltado o línea en blanco
-  const v=(data[key]||'').toString().trim();
-  if(v)return `<span class="fill">${esc(v)}</span>`;
-  return `<span class="blank" style="min-width:${minw||110}px">&nbsp;</span>`;
+/* ---------- HELPERS PLANTILLA ---------- */
+function gv(key){
+  let v=(data[key]||'').toString().trim();
+  if(v)return v;
+  if(key==='reportado_como')return (data.estado_dispositivo||'').trim();
+  if(key==='fecha_consulta')return (data.fecha||'').trim();
+  if(key==='fecha_embalaje')return (data.fecha||'').trim();
+  if(key==='imei_slot')return '1';
+  return '';
 }
+function f(key,minw){const v=gv(key);return v?`<span class="fill">${esc(v)}</span>`:`<span class="blank" style="min-width:${minw||110}px">&nbsp;</span>`;}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function ck(key,val){ // casillero ( X )
-  return data[key]===val?'(<span class="ck">&nbsp;X&nbsp;</span>)':'(&nbsp;&nbsp;&nbsp;)';
-}
+function ck(key,val){return data[key]===val?'(<span class="ck">&nbsp;X&nbsp;</span>)':'(&nbsp;&nbsp;&nbsp;)';}
 function sexo(){return data.sexo||'(&nbsp;&nbsp;)';}
 
-/* ============ PLANTILLAS DE ACTAS ============ */
-function tpl_intervencion(){
-  return `<div class="sheet">
+/* ---------- PLANTILLAS ---------- */
+function tpl_intervencion(){return `<div class="sheet">
   <h3>Acta de Intervención Policial N°</h3>
-  <p>--- En el distrito de ${f('distrito')} provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, ubicados en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, en compañía de ${f('efectivo2',180)} identificado con CIP Nro. ${f('efectivo2_cip')}, ambos pertenecientes a la ${f('unidad',180)}; dan cuenta que en circunstancias que nos encontrábamos realizando actuaciones propias de nuestra función policial y a mérito del desarrollo del <b>OPERATIVO POLICIAL "</b>${f('operativo')}<b>"</b>; bajo el mando de ${f('jefe',200)}, se intervino en ${f('lugar',220)}, a horas ${f('hora_aprox',70)} aprox., a la persona de ${f('nombre',220)} ${sexo()}, natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, hijo de Don ${f('padre')} y Doña ${f('madre')}, con grado de instrucción ${f('instruccion')}, de profesión y/o ocupación ${f('ocupacion')}, identificado con DNI Nro. ${f('dni')} con teléfono celular Nro. ${f('celular')}, correo electrónico ${f('correo',180)} y domiciliado actualmente en ${f('domicilio',240)}; a quien se le solicitó cordialmente pueda proporcionar el Nro. de IMEI de su equipo móvil, accediendo y de forma <b>VOLUNTARIA</b> proporcionó un código de quince dígitos, verificando así que el IMEI ${f('imei_slot',40)} presenta la siguiente numeración: ${f('imei_num',180)}, el mismo que al ser ingresado y consultado en el Registro Nacional de Equipos Terminales Móviles para la Seguridad - RENTESEG a través de la plataforma virtual de OSIPTEL, informó lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}. Asimismo, se hace mención que el equipo móvil tiene las siguientes características: Marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')} con número telefónico: ${f('num_telefonico')}.</p>
-  <p>Ante lo expuesto, se le procede a informar el motivo de su <b>DETENCIÓN</b>; por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>, en agravio de Persona en Proceso de Identificación; haciéndole saber de ello y los derechos que le asisten en su calidad de <b>DETENIDO</b>, los mismos que se encuentran contenidos en el Artículo 71° del Código Procesal Penal vigente. En ese sentido, la persona antes señalada fue trasladada a la Comisaría PNP ${f('comisaria')}, con el fin de realizar las diligencias correspondientes. Se pone a disposición de la Comisaría PNP ${f('comisaria')}, en calidad de <b>DETENIDO</b> a la persona de ${f('nombre',220)} ${sexo()} identificado con DNI Nro. ${f('dni')}, adjuntando al presente <b>un (01) Acta de Consentimiento para Verificación de Número de IMEI</b>, <b>un (01) Acta de Entrega, Recepción, Incautación y Lacrado de equipo móvil</b>, una (01) Impresión del reporte de OSIPTEL, un (01) Acta de Detención, un (01) Acta de Lectura de Derechos, una (01) Constancia de Buen Trato, un (01) Acta de Registro Personal, y una (01) mica transparente debidamente lacrada y rotulada, conteniendo la evidencia, con su respectivo formato A-6 y A-7 del procedimiento de la Cadena de Custodia.</p>
-  <p>Finalmente, de todo lo indicado se puso en conocimiento del RMP ${f('rmp',220)} ${f('rmp_via',120)}, al número telefónico ${f('rmp_telefono')}.</p>
+  <p>--- En el distrito de ${f('distrito')} provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, ubicados en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, en compañía de ${f('efectivo2',170)} identificado con CIP Nro. ${f('efectivo2_cip')}, ambos pertenecientes a la ${f('unidad',170)}; dan cuenta que en circunstancias que nos encontrábamos realizando actuaciones propias de nuestra función policial y a mérito del desarrollo del <b>OPERATIVO POLICIAL "</b>${f('operativo')}<b>"</b>; bajo el mando de ${f('jefe',190)}, se intervino en ${f('lugar',210)}, a horas ${f('hora_aprox',70)} aprox., a la persona de ${f('nombre',210)} ${sexo()}, natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, hijo de Don ${f('padre')} y Doña ${f('madre')}, con grado de instrucción ${f('instruccion')}, de profesión y/o ocupación ${f('ocupacion')}, identificado con DNI Nro. ${f('dni')} con teléfono celular Nro. ${f('celular')}, correo electrónico ${f('correo',170)} y domiciliado actualmente en ${f('domicilio',230)}; a quien se le solicitó cordialmente pueda proporcionar el Nro. de IMEI de su equipo móvil, accediendo y de forma <b>VOLUNTARIA</b> proporcionó un código de quince dígitos, verificando así que el IMEI ${f('imei_slot',40)} presenta la siguiente numeración: ${f('imei_num',180)}, el mismo que al ser ingresado y consultado en el Registro Nacional de Equipos Terminales Móviles para la Seguridad - RENTESEG a través de la plataforma virtual de OSIPTEL, informó lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}. Asimismo, se hace mención que el equipo móvil tiene las siguientes características: Marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')} con número telefónico: ${f('num_telefonico')}.</p>
+  <p>Ante lo expuesto, se le procede a informar el motivo de su <b>DETENCIÓN</b>; por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>, en agravio de Persona en Proceso de Identificación; haciéndole saber de ello y los derechos que le asisten en su calidad de <b>DETENIDO</b>, los mismos que se encuentran contenidos en el Artículo 71° del Código Procesal Penal vigente. En ese sentido, la persona antes señalada fue trasladada a la Comisaría PNP ${f('comisaria')}, con el fin de realizar las diligencias correspondientes. Se pone a disposición de la Comisaría PNP ${f('comisaria')}, en calidad de <b>DETENIDO</b> a la persona de ${f('nombre',210)} ${sexo()} identificado con DNI Nro. ${f('dni')}, adjuntando al presente un (01) Acta de Consentimiento para Verificación de Número de IMEI, un (01) Acta de Entrega, Recepción, Incautación y Lacrado de equipo móvil, una (01) Impresión del reporte de OSIPTEL, un (01) Acta de Detención, un (01) Acta de Lectura de Derechos, una (01) Constancia de Buen Trato, un (01) Acta de Registro Personal, y una (01) mica transparente debidamente lacrada y rotulada, conteniendo la evidencia, con su respectivo formato A-6 y A-7 del procedimiento de la Cadena de Custodia.</p>
+  <p>Finalmente, de todo lo indicado se puso en conocimiento del RMP ${f('rmp',210)} ${f('rmp_via',110)}, al número telefónico ${f('rmp_telefono')}.</p>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')}, se da por concluida la presente diligencia y una vez leída por los participantes se procede a firmar en señal de conformidad. ---</p>
-  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}
-  </div>`;
-}
+  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}</div>`;}
 
-function tpl_consentimiento(){
-  return `<div class="sheet">
+function tpl_consentimiento(){return `<div class="sheet">
   <h3>Acta de Consentimiento para Verificación de Número de IMEI de Equipo Móvil-Celular</h3>
-  <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presente el instructor, se intervino en ${f('lugar',240)} a la persona identificada como ${f('nombre',220)} ${sexo()} con DNI Nro. ${f('dni')}, domiciliado en ${f('domicilio',220)}, quien da su <b>CONSENTIMIENTO VOLUNTARIO</b> para la verificación del número de IMEI de su equipo celular de Marca: ${f('marca')}, Modelo: ${f('modelo')} de color ${f('color')} en la plataforma virtual del <b>REGESENT</b> de <b>OSIPTEL</b>. Se procedió a realizar la verificación del IMEI del equipo móvil-celular, conforme al detalle siguiente: ---</p>
+  <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presente el instructor, se intervino en ${f('lugar',230)} a la persona identificada como ${f('nombre',210)} ${sexo()} con DNI Nro. ${f('dni')}, domiciliado en ${f('domicilio',210)}, quien da su <b>CONSENTIMIENTO VOLUNTARIO</b> para la verificación del número de IMEI de su equipo celular de Marca: ${f('marca')}, Modelo: ${f('modelo')} de color ${f('color')} en la plataforma virtual del <b>REGESENT</b> de <b>OSIPTEL</b>. Se procedió a realizar la verificación del IMEI del equipo móvil-celular, conforme al detalle siguiente: ---</p>
   <p><b>PRIMERO:</b> La persona antes indicada de forma voluntaria procedió a digitar el código <b>*#06#</b> en su equipo celular proporcionando un código de IMEI de quince dígitos; al verificar el IMEI ${f('imei_slot',40)} con número ${f('imei_num',180)}, dichos datos fueron ingresados a la plataforma virtual de <b>OSIPTEL</b>, obteniendo como resultado lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}.</p>
   <p><b>SEGUNDO:</b> Asimismo se le hizo de conocimiento que el IMEI de su equipo celular se encuentra reportado como ${f('reportado_como')}, por lo que se encontraría inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>.</p>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')} se da por concluida la presente, firmando los participantes en señal de conformidad. ---</p>
-  ${signBlock('EL INSTRUCTOR PNP','INTERVENIDO')}
-  </div>`;
-}
+  ${signBlock('EL INSTRUCTOR PNP','INTERVENIDO')}</div>`;}
 
-function tpl_incautacion(){
-  return `<div class="sheet">
+function tpl_incautacion(){return `<div class="sheet">
   <h3>Acta de Entrega, Recepción, Incautación y Lacrado de Equipo Móvil</h3>
-  <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presentes en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')} y la persona de ${f('nombre',220)} ${sexo()}, natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, identificado con DNI Nro. ${f('dni')} y domiciliado actualmente en ${f('domicilio',220)}; se procede a redactar la presente <b>"ACTA DE ENTREGA, RECEPCIÓN, INCAUTACIÓN Y LACRADO DE EQUIPO MÓVIL"</b>, bajo los siguientes detalles:</p>
+  <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presentes en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')} y la persona de ${f('nombre',210)} ${sexo()}, identificado con DNI Nro. ${f('dni')} y domiciliado actualmente en ${f('domicilio',210)}; se procede a redactar la presente <b>"ACTA DE ENTREGA, RECEPCIÓN, INCAUTACIÓN Y LACRADO DE EQUIPO MÓVIL"</b>, bajo los siguientes detalles:</p>
   <ul>
-    <li>Durante el desarrollo de la intervención policial a la persona señalada líneas arriba, a mérito del <b>Operativo Policial</b> "${f('operativo')}", y al verificar el IMEI Nro. ${f('imei_num',180)}, entregado por la persona en forma voluntaria, dio como resultado en el RENTESEG de OSIPTEL: <b>ESTADO DEL DISPOSITIVO</b> ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}; se le informó que se encuentra ${f('reportado_como')}, por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>.</li>
+    <li>Durante la intervención policial a la persona señalada, a mérito del <b>Operativo Policial</b> "${f('operativo')}", y al verificar el IMEI Nro. ${f('imei_num',180)}, entregado en forma voluntaria, dio como resultado en el RENTESEG de OSIPTEL: <b>ESTADO DEL DISPOSITIVO</b> ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}; se le informó que se encuentra ${f('reportado_como')}, por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>.</li>
     <li>Ante lo señalado, se le solicita entregue el bien (equipo móvil), quien de forma voluntaria hace entrega; es recibida y se procede a la <b>INCAUTACIÓN</b> del equipo móvil de marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')}, IMEI Nro. ${f('imei_num',180)}, de la empresa de telefonía ${f('operadora')}, chip: SI ${ck('chip','SI')} NO ${ck('chip','NO')}, el mismo que fue encontrado ENCENDIDO ${ck('estado_equipo','ENCENDIDO')} / APAGADO ${ck('estado_equipo','APAGADO')}; en regular estado de conservación.</li>
-    <li>Sobre la evidencia descrita, esta procede a ser ingresada y lacrada conforme al detalle siguiente: ${data.lacrado_desc?('<span class="fill">'+esc(data.lacrado_desc)+'</span>'):'<span class="blank" style="min-width:100%;display:block;height:48px"></span>'} con su respectivo rotulado, siguiendo los procedimientos establecidos de <b>CADENA DE CUSTODIA</b>.</li>
+    <li>Sobre la evidencia descrita, esta procede a ser ingresada y lacrada conforme al detalle siguiente: ${data.lacrado_desc?('<span class="fill">'+esc(data.lacrado_desc)+'</span>'):'<span class="blank" style="min-width:100%;display:block;height:46px"></span>'} con su respectivo rotulado, siguiendo los procedimientos establecidos de <b>CADENA DE CUSTODIA</b>.</li>
   </ul>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')}, se da por concluida la presente diligencia, firmando los participantes en señal de conformidad. ---</p>
-  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}
-  </div>`;
-}
+  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}</div>`;}
 
-function tpl_detencion(){
-  return `<div class="sheet">
+function tpl_detencion(){return `<div class="sheet">
   <h3>Acta de Detención</h3>
-  <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presentes en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, el <b>DETENIDO</b> ${f('nombre',220)} ${sexo()} natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, hijo de Don ${f('padre')} y Doña ${f('madre')}, con grado de instrucción ${f('instruccion')}, de profesión y/o ocupación ${f('ocupacion')}, identificado con DNI Nro. ${f('dni')}; se procede a redactar la presente <b>ACTA DE DETENCIÓN</b> con el siguiente detalle:</p>
-  <p>En este estado se le notifica que se encuentra en calidad de <b>DETENIDO</b> en flagrante delito contemplado en la Constitución Política del Perú, Artículo 2°, Inciso 24°, Numeral "f", y Artículo 259° del Código Procesal Penal, por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>, por el resultado obtenido en la plataforma virtual del <b>REGESENT</b> de <b>OSIPTEL</b> al haber ingresado el número de IMEI del equipo móvil que poseía durante la intervención policial, el cual se encuentra reportado como ${f('reportado_como')}.</p>
+  <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presentes en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, el <b>DETENIDO</b> ${f('nombre',210)} ${sexo()}, identificado con DNI Nro. ${f('dni')}; se procede a redactar la presente <b>ACTA DE DETENCIÓN</b> con el siguiente detalle:</p>
+  <p>En este estado se le notifica que se encuentra en calidad de <b>DETENIDO</b> en flagrante delito contemplado en la Constitución Política del Perú, Artículo 2°, Inciso 24°, Numeral "f", y Artículo 259° del Código Procesal Penal, por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>, por el resultado obtenido en la plataforma virtual del <b>REGESENT</b> de <b>OSIPTEL</b> al haber ingresado el número de IMEI del equipo móvil que poseía durante la intervención, el cual se encuentra reportado como ${f('reportado_como')}.</p>
   <p>Que en dicha condición se le da lectura (Art. 120°.4 CPP) de los siguientes derechos (Art. 71°.2 CPP):</p>
   ${rightsTable()}
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')} se da por concluida la presente, firmando a continuación los participantes. ---</p>
-  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}
-  </div>`;
-}
+  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}</div>`;}
 
-function tpl_derechos(){
-  return `<div class="sheet">
+function tpl_derechos(){return `<div class="sheet">
   <h3>Acta de Lectura de Derechos del Detenido</h3>
-  <p>SE INFORMA A LA PERSONA DE: ${f('nombre',220)} ${sexo()}</p>
+  <p>SE INFORMA A LA PERSONA DE: ${f('nombre',210)} ${sexo()}</p>
   <p>IDENTIFICADO CON DNI Nro. ${f('dni')} QUE ES IMPUTADO POR ENCONTRARSE INMERSO EN EL PRESUNTO DELITO CONTRA EL PATRIMONIO EN LA MODALIDAD DE <b>RECEPTACIÓN</b>.</p>
   <p><b>Y QUE EN DICHA CONDICIÓN TIENE LOS SIGUIENTES DERECHOS (Art. 71° CPP):</b></p>
   ${rightsTable()}
   <p>Del mismo modo, la causa o motivo de la detención es a razón de la intervención policial realizada en el Operativo Policial "${f('operativo')}", a horas ${f('hora_aprox',70)}, del ${f('fecha')}; el mismo que presentaba un equipo móvil con IMEI Nro. ${f('imei_num',180)}, que informó según el RENTESEG de OSIPTEL con ESTADO DEL DISPOSITIVO: ${f('estado_dispositivo')}.</p>
   <p>Ante ello, la persona indica que:</p>
   <ul>
-    <li>Se comunique su detención a: ${f('comunicar_a',200)}, con quien tiene el parentesco de ${f('parentesco')}, con teléfono: ${f('comunicar_telefono')}.</li>
-    <li>Solicitó ser asistido por un intérprete en el idioma: ${f('interprete_idioma',180)}.</li>
+    <li>Se comunique su detención a: ${f('comunicar_a',190)}, con quien tiene el parentesco de ${f('parentesco')}, con teléfono: ${f('comunicar_telefono')}.</li>
+    <li>Solicitó ser asistido por un intérprete en el idioma: ${f('interprete_idioma',170)}.</li>
     <li>Solicitó se comunique a su abogado defensor: SI ${ck('abogado_defensor','SI')} NO ${ck('abogado_defensor','NO')}, con teléfono: ${f('abogado_telefono')}.</li>
     <li>Solicitó se designe abogado de oficio: SI ${ck('abogado_oficio','SI')} NO ${ck('abogado_oficio','NO')}.</li>
     <li>Solicitó ser examinado por un médico: SI ${ck('medico','SI')} NO ${ck('medico','NO')}.</li>
   </ul>
-  ${signBlock('EL INSTRUCTOR PNP','EL IMPUTADO')}
-  </div>`;
-}
+  ${signBlock('EL INSTRUCTOR PNP','EL IMPUTADO')}</div>`;}
 
-function tpl_buentrato(){
-  return `<div class="sheet">
+function tpl_buentrato(){return `<div class="sheet">
   <h3>Constancia de Buen Trato</h3>
-  <p>El ciudadano <b>DETENIDO</b> que suscribe la presente, ${f('nombre',220)} ${sexo()} identificado con DNI Nro. ${f('dni')}, deja constancia de haber recibido buen trato físico y psicológico por parte del personal Policial interviniente, quienes realizaron el procedimiento de <b>DETENCIÓN</b>; y que su permanencia en esta Unidad Policial ha sido con dignidad y respeto irrestricto a los Derechos Humanos. Para mayor constancia firma e imprime su índice derecho en señal de conformidad.</p>
-  <div class="sign"><div class="col"><div class="ln">FIRMA / ÍNDICE DERECHO</div><div style="margin-top:6px">NOMBRES: ${f('nombre',200)}</div><div>D.N.I. ${f('dni')}</div></div></div>
-  </div>`;
-}
+  <p>El ciudadano <b>DETENIDO</b> que suscribe la presente, ${f('nombre',210)} ${sexo()} identificado con DNI Nro. ${f('dni')}, deja constancia de haber recibido buen trato físico y psicológico por parte del personal Policial interviniente, quienes realizaron el procedimiento de <b>DETENCIÓN</b>; y que su permanencia en esta Unidad Policial ha sido con dignidad y respeto irrestricto a los Derechos Humanos. Para mayor constancia firma e imprime su índice derecho en señal de conformidad.</p>
+  <div class="sign"><div class="col"><div class="ln">FIRMA / ÍNDICE DERECHO</div><div style="margin-top:6px">NOMBRES: ${f('nombre',190)}</div><div>D.N.I. ${f('dni')}</div></div></div></div>`;}
 
-function tpl_registro(){
-  return `<div class="sheet">
+function tpl_registro(){return `<div class="sheet">
   <h3>Acta de Registro Personal</h3>
-  <p>--- En la Ciudad de ${f('ciudad')}, Distrito de ${f('distrito')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presentes ${f('rp_presentes',200)}, el <b>INSTRUCTOR PNP</b> ${f('instructor',200)} que suscribe la presente, y el <b>DETENIDO</b> ${f('nombre',220)} ${sexo()}, natural de ${f('natural')}, nacido el ${f('nacimiento')}, estado civil ${f('estado_civil')}, ocupación ${f('ocupacion')}, grado de instrucción ${f('instruccion')}, identificado con DNI Nro. ${f('dni')}, domiciliado en ${f('domicilio',200)}, celular N° ${f('celular')}, correo electrónico ${f('correo',160)}; se procede a redactar la presente <b>Acta de Registro Personal</b>, a quien previamente, de conformidad con el Art. 210 del Código Procesal Penal, se le hace conocer lo siguiente:</p>
+  <p>--- En la Ciudad de ${f('ciudad')}, Distrito de ${f('distrito')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presentes ${f('rp_presentes',190)}, el <b>INSTRUCTOR PNP</b> ${f('instructor',200)} que suscribe la presente, y el <b>DETENIDO</b> ${f('nombre',210)} ${sexo()}, identificado con DNI Nro. ${f('dni')}, domiciliado en ${f('domicilio',190)}; se procede a redactar la presente <b>Acta de Registro Personal</b>, a quien previamente, de conformidad con el Art. 210 del Código Procesal Penal, se le hace conocer lo siguiente:</p>
   <p>1. La Policía, cuando existan fundadas razones para considerar que una persona oculta en su cuerpo o ámbito personal bienes relacionados con el delito, procederá a registrarla. <b>Antes de su realización se invitará a la persona a que exhiba y entregue el bien buscado.</b> Si el bien se presenta no se procederá al registro, salvo que se considere útil proceder a fin de completar las investigaciones.</p>
   <p>2. El registro se efectuará respetando la dignidad y, dentro de los límites posibles, el pudor de la persona. Corresponderá realizarlo a una persona del mismo sexo del intervenido, salvo que ello importe demora en perjuicio de la investigación.</p>
   <p>3. El registro puede comprender no sólo las vestimentas que llevare el intervenido, sino también el equipaje o bultos que portare y el vehículo utilizado.</p>
   <p>4. Antes de iniciar el registro se expresará al intervenido las razones de su ejecución, y <b>se le indicará del derecho que tiene de hacerse asistir en ese acto por una persona de su confianza</b>, siempre que ésta se pueda ubicar rápidamente y sea mayor de edad.</p>
-  <p>Realizado el registro personal, se halló: <span class="blank" style="min-width:100%;display:block;height:46px"></span></p>
-  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}
-  </div>`;
-}
+  <p>Realizado el registro personal, se halló: <span class="blank" style="min-width:100%;display:block;height:44px"></span></p>
+  ${signBlock('EL INSTRUCTOR PNP','DETENIDO')}</div>`;}
 
-function tpl_a6(){
-  return `<div class="sheet">
+function tpl_a6(){return `<div class="sheet">
   <h3 style="margin-bottom:6px">Policía Nacional del Perú · Formato A-6</h3>
-  <p style="text-align:center;font-weight:700;margin-top:0">RÓTULO DE INDICIOS / EVIDENCIAS / ELEMENTOS RECOGIDOS (EN CADENA DE CUSTODIA)</p>
-  <p>Distrito Fiscal: ${f('distrito_fiscal',260)}</p>
-  <p>Número de Hallazgo: ${f('num_hallazgo',200)}</p>
-  <p>Cantidad: ${f('cantidad',60)} &nbsp;&nbsp; Unidad de Medida: ${f('unidad_medida',120)}</p>
-  <p>Dependencia, Unidad, División que interviene: ${f('unidad',240)}</p>
-  <p>Lugar de Recolección: ${f('lugar',260)}</p>
-  <p>Día <span class="blank" style="min-width:50px">&nbsp;</span> Mes <span class="blank" style="min-width:60px">&nbsp;</span> Año <span class="blank" style="min-width:60px">&nbsp;</span> Hora ${f('hora_aprox',60)} (0-24 horas)</p>
-  <p>Descripción y Condición: ${data.descripcion_condicion?('<span class="fill">'+esc(data.descripcion_condicion)+'</span>'):autoDesc()}</p>
-  <p>Tipo de Embalaje utilizado: ${f('tipo_embalaje',240)}</p>
+  <p style="text-align:center;font-weight:700;margin-top:0">RÓTULO DE INDICIOS / EVIDENCIAS / ELEMENTOS RECOGIDOS (CADENA DE CUSTODIA)</p>
+  <p>Distrito Fiscal: ${f('distrito_fiscal',250)}</p>
+  <p>Número de Hallazgo: ${f('num_hallazgo',190)}</p>
+  <p>Dependencia, Unidad, División que interviene: ${f('unidad',230)}</p>
+  <p>Lugar de Recolección: ${f('lugar',250)}</p>
+  <p>Fecha: ${f('fecha',180)} &nbsp; Hora: ${f('hora_aprox',60)} (0-24 horas)</p>
+  <p>Descripción y Condición: ${autoDesc()}</p>
+  <p>Tipo de Embalaje utilizado: ${f('tipo_embalaje',230)}</p>
   <p style="font-weight:700;margin-top:18px">SERVIDOR QUE RECOLECTA EL BIEN</p>
-  <p>Nombre Completo: ${f('instructor',240)}</p>
-  <p>DNI / CIP N°: ${f('instructor_cip',180)} &nbsp;&nbsp; Cargo: ${f('servidor_cargo',150)}</p>
-  <p>Fecha de Embalaje: ${f('fecha_embalaje',220)}</p>
-  <div class="sign"><div class="col"><div class="ln">FIRMA</div></div></div>
-  </div>`;
-}
+  <p>Nombre Completo: ${f('instructor',230)}</p>
+  <p>DNI / CIP N°: ${f('instructor_cip',170)} &nbsp; Cargo: ${f('servidor_cargo',150)}</p>
+  <p>Fecha de Embalaje: ${f('fecha_embalaje',210)}</p>
+  <div class="sign"><div class="col"><div class="ln">FIRMA</div></div></div></div>`;}
 function autoDesc(){
-  if(data.marca||data.modelo||data.imei_num){
+  if(data.lacrado_desc) return '<span class="fill">'+esc(data.lacrado_desc)+'</span>';
+  if(data.marca||data.modelo||data.imei_num)
     return `<span class="fill">Equipo celular marca ${esc(data.marca||'____')}, modelo ${esc(data.modelo||'____')}, color ${esc(data.color||'____')}, IMEI ${esc(data.imei_num||'____')}, en regular estado de conservación.</span>`;
-  }
-  return '<span class="blank" style="min-width:100%;display:block;height:60px"></span>';
-}
-/* tabla de derechos (compartida) */
-function rightsTable(){
-  const R=[
-    'El imputado puede hacer valer por sí mismo, o a través de su Abogado Defensor, los derechos que la Constitución y las Leyes le conceden, desde el inicio de las primeras diligencias de investigación hasta la culminación del proceso.',
-    'Conocer los cargos formulados en su contra y, en caso de detención, a que se le exprese la causa o motivo de dicha medida, entregándole la orden de detención girada en su contra, cuando corresponda.',
-    'Designar a la persona o institución a la que debe comunicar su detención y que dicha comunicación se haga en forma inmediata.',
-    'Ser asistido desde los actos iniciales de investigación por un Abogado Defensor.',
-    'Abstenerse de declarar; y, si acepta hacerlo, a que su Abogado Defensor esté presente en su declaración y en todas las diligencias en que se requiera su presencia.',
-    'Que no se emplee en su contra medios coactivos, intimidatorios o contrarios a su dignidad, ni a ser sometido a técnicas o métodos que induzcan o alteren su libre voluntad o a sufrir una restricción no autorizada ni permitida por Ley; y ser examinado por un médico legista o, en su defecto, por otro profesional de la salud, cuando su estado de salud así lo requiera.'
-  ];
-  return '<table class="rights">'+R.map((t,i)=>`<tr><td class="n">${i+1}</td><td>${t}</td></tr>`).join('')+'</table>';
+  return '<span class="blank" style="min-width:100%;display:block;height:54px"></span>';
 }
 
-/* bloque de firmas */
-function signBlock(left,right){
-  return `<div class="sign">
-    <div class="col"><div class="ln">${left}</div></div>
-    <div class="col"><div class="ln">${right}</div>
-      <div style="margin-top:8px;font-weight:400;font-size:11px">APELLIDOS Y NOMBRES:</div>
-      <div style="font-size:11px">${f('nombre',180)}</div>
-      <div style="font-size:11px">DNI N°: ${f('dni',120)}</div>
-      <div style="font-size:11px">FECHA: ${f('fecha',120)}</div>
-    </div>
-  </div>`;
-}
+function rightsTable(){const R=[
+  'El imputado puede hacer valer por sí mismo, o a través de su Abogado Defensor, los derechos que la Constitución y las Leyes le conceden, desde el inicio de las primeras diligencias de investigación hasta la culminación del proceso.',
+  'Conocer los cargos formulados en su contra y, en caso de detención, a que se le exprese la causa o motivo de dicha medida, entregándole la orden de detención girada en su contra, cuando corresponda.',
+  'Designar a la persona o institución a la que debe comunicar su detención y que dicha comunicación se haga en forma inmediata.',
+  'Ser asistido desde los actos iniciales de investigación por un Abogado Defensor.',
+  'Abstenerse de declarar; y, si acepta hacerlo, a que su Abogado Defensor esté presente en su declaración y en todas las diligencias en que se requiera su presencia.',
+  'Que no se emplee en su contra medios coactivos, intimidatorios o contrarios a su dignidad, ni a ser sometido a técnicas o métodos que induzcan o alteren su libre voluntad o a sufrir una restricción no autorizada ni permitida por Ley; y ser examinado por un médico legista o, en su defecto, por otro profesional de la salud, cuando su estado de salud así lo requiera.'];
+  return '<table class="rights">'+R.map((t,i)=>`<tr><td class="n">${i+1}</td><td>${t}</td></tr>`).join('')+'</table>';}
+
+function signBlock(left,right){return `<div class="sign">
+  <div class="col"><div class="ln">${left}</div></div>
+  <div class="col"><div class="ln">${right}</div>
+    <div style="margin-top:8px;font-weight:400;font-size:11px">APELLIDOS Y NOMBRES:</div>
+    <div style="font-size:11px">${f('nombre',180)}</div>
+    <div style="font-size:11px">DNI N°: ${f('dni',120)}</div>
+    <div style="font-size:11px">FECHA: ${f('fecha',120)}</div></div></div>`;}
 
 const RENDER={intervencion:tpl_intervencion,consentimiento:tpl_consentimiento,incautacion:tpl_incautacion,detencion:tpl_detencion,derechos:tpl_derechos,buentrato:tpl_buentrato,registro:tpl_registro,a6:tpl_a6};
 
-/* ============ GENERAR / VISOR ============ */
+/* ---------- GENERAR ---------- */
 function generate(){
+  const miss=ESSENTIAL.filter(k=>!(data[k]||'').toString().trim());
+  if(miss.includes('nombre')||miss.includes('dni')||miss.includes('imei_num')){
+    if(!confirm('Faltan datos esenciales (nombre/DNI/IMEI). ¿Generar igual con líneas en blanco?'))return;
+  }
   const sel=ACTAS.filter(a=>a.on);
   if(!sel.length){toast('Selecciona al menos un acta');return;}
-  const cont=document.getElementById('docs');
-  cont.innerHTML=sel.map(a=>RENDER[a.id]()).join('');
-  document.getElementById('viewer').classList.add('show');
-  document.body.classList.add('viewing');
-  window.scrollTo(0,0);
+  document.getElementById('docs').innerHTML=sel.map(a=>RENDER[a.id]()).join('');
+  document.getElementById('viewer').classList.add('show');document.body.classList.add('viewing');window.scrollTo(0,0);
 }
 function backToForm(){document.getElementById('viewer').classList.remove('show');document.body.classList.remove('viewing');window.scrollTo(0,0);}
 
-/* ============ COMPARTIR ============ */
+/* ---------- COMPARTIR ---------- */
 async function sharePDF(){
   if(!window.html2pdf){return loadH2P(sharePDF);}
   toast('Generando PDF…');
-  const el=document.getElementById('docs');
   const opt={margin:[10,10,10,10],filename:fileName()+'.pdf',image:{type:'jpeg',quality:.95},
-    html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
-    pagebreak:{mode:['css','legacy'],before:'.sheet'}};
+    html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy'],before:'.sheet'}};
   try{
-    const worker=html2pdf().set(opt).from(el);
-    const blob=await worker.output('blob');
-    const file=new File([blob],fileName()+'.pdf',{type:'application/pdf'});
+    const blob=await html2pdf().set(opt).from(document.getElementById('docs')).output('blob');
+    const file=new File([blob],opt.filename,{type:'application/pdf'});
     if(navigator.canShare&&navigator.canShare({files:[file]})){
       await navigator.share({files:[file],title:'Actas PNP',text:'Actas de receptación – '+(data.nombre||'')});
-    }else{
-      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=opt.filename;a.click();
-      toast('PDF descargado · adjúntalo en WhatsApp');
-    }
-  }catch(e){toast('Usa "Imprimir / PDF" si falla la descarga');}
+    }else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=opt.filename;a.click();toast('PDF descargado · adjúntalo en WhatsApp');}
+  }catch(e){toast('Usa "Imprimir / PDF" si falla');}
 }
 function shareWhatsAppText(){
-  const t=`*ACTAS PNP – RECEPTACIÓN*\n`+
-    `Detenido: ${data.nombre||'—'}\nDNI: ${data.dni||'—'}\n`+
-    `Equipo: ${data.marca||''} ${data.modelo||''}\nIMEI: ${data.imei_num||'—'}\n`+
-    `Estado RENTESEG: ${data.estado_dispositivo||'—'}\n`+
-    `Operativo: ${data.operativo||'—'}\nFecha: ${data.fecha||'—'}\n\n`+
-    `(Adjuntar el PDF de las actas para impresión y firma)`;
+  const t=`*ACTAS PNP – RECEPTACIÓN*\nDetenido: ${data.nombre||'—'}\nDNI: ${data.dni||'—'}\nEquipo: ${data.marca||''} ${data.modelo||''}\nIMEI: ${data.imei_num||'—'}\nEstado RENTESEG: ${data.estado_dispositivo||'—'}\nFecha: ${data.fecha||'—'}\n\n(Adjuntar el PDF de las actas para impresión y firma)`;
   window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');
 }
-function fileName(){return 'ACTAS_'+(data.dni||'SN').replace(/\s/g,'')+'_'+(data.nombre||'').split(' ')[0];}
-function loadH2P(cb){
-  toast('Cargando módulo PDF…');
-  const s=document.createElement('script');
+function fileName(){return 'ACTAS_'+(data.dni||'SN').replace(/\s/g,'')+'_'+((data.nombre||'').split(' ')[0]||'');}
+function loadH2P(cb){toast('Cargando módulo PDF…');const s=document.createElement('script');
   s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js';
-  s.onload=()=>cb();s.onerror=()=>toast('Sin conexión: usa "Imprimir / PDF"');
-  document.head.appendChild(s);
-}
+  s.onload=()=>cb();s.onerror=()=>toast('Sin conexión: usa "Imprimir / PDF"');document.head.appendChild(s);}
 
-/* ============ TOAST ============ */
-let toastT;
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2400);}
+let toastT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2400);}
 
 init();
 </script>
