@@ -136,6 +136,7 @@
   .hora-evid{margin-top:10px;background:#fbeec9;border:1px solid #e7cf86;border-radius:9px;padding:8px 11px;font-size:12px;color:#5b4a16;line-height:1.4}
   .sigimg{display:block;max-height:54px;max-width:88%;margin:0 auto -8px;object-fit:contain}
   .sign-modal{position:fixed;inset:0;background:rgba(8,30,20,.55);z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:0}
+  .sign-modal[hidden]{display:none}
   .sign-modal:not([hidden]){animation:fade .2s ease}
   .sign-card{background:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
   @media(min-width:560px){.sign-card{border-radius:16px;margin-bottom:24px}}
@@ -436,8 +437,9 @@
     <div class="resumen" id="resumen"></div>
     <div class="subhead" style="margin:16px 0 0">Actas a generar</div>
     <div class="actas-pick" id="actasPick"></div>
-    <button type="button" class="btn" style="width:100%;justify-content:center;margin-top:14px;border-color:#cdd6d1;color:var(--pnp-green);font-weight:700" onclick="openSign()">✍️ Agregar firmas (opcional) — celular o subir imagen</button>
+    <button type="button" class="btn" style="width:100%;justify-content:center;margin-top:14px;border-color:#cdd6d1;color:var(--pnp-green);font-weight:700" onclick="openSign()">✍️ Poner firma del policía y del intervenido (opcional)</button>
     <div id="firmaTag" class="hint" style="margin-top:8px"></div>
+    <p class="hint" style="margin-top:4px">Si la persona se niega a firmar en la calle, genera las actas sin firma (sale la línea en blanco) y fírmenla luego en la comisaría.</p>
   </section>
 
 </main>
@@ -463,9 +465,10 @@
   <div class="docscroll" id="docs"></div>
 </section>
 
-<div id="signModal" class="sign-modal" hidden>
+<div id="signModal" class="sign-modal" hidden onclick="if(event.target===this)closeSign()">
   <div class="sign-card">
-    <div class="sign-head"><b>Firmar en el celular</b><button class="sign-x" onclick="closeSign()">✕</button></div>
+    <div class="sign-head"><b>Firma del policía y del intervenido</b><button class="sign-x" onclick="closeSign()">✕</button></div>
+    <p class="hint" style="margin:-4px 0 12px">Opcional. Puedes firmar ahora (con el dedo o subiendo una imagen) o cerrar y firmar luego en la comisaría.</p>
     <div class="sign-pad-wrap">
       <div class="sign-label">Firma del EFECTIVO (Instructor)
         <span class="sign-tools">
@@ -486,7 +489,7 @@
     </div>
     <p class="hint" style="margin:4px 2px 10px">Firma con el dedo (celular) o usa <b>📷 Subir</b> para cargar una imagen de la firma (laptop). Aparecerán sobre las líneas de todas las actas.</p>
     <div class="sign-actions">
-      <button class="btn" onclick="closeSign()">Cancelar</button>
+      <button class="btn" onclick="closeSign()">Cerrar (firmar después)</button>
       <button class="btn primary" onclick="saveSign()">Guardar firmas</button>
     </div>
   </div>
@@ -1004,6 +1007,7 @@ function loadH2P(cb){toast('Cargando módulo PDF…');const s=document.createEle
 
 let toastT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2400);}
 
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=document.getElementById('signModal');if(m&&!m.hidden)closeSign();}});
 init();
 </script>
 </body>
