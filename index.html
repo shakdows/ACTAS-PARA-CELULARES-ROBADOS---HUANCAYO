@@ -167,9 +167,9 @@
     header.app,.toolbar,.fab,.docbar,main,.toast{display:none !important}
     body{background:#fff}#viewer{display:block !important}
     .docscroll{padding:0;background:#fff}
-    .sheet{box-shadow:none;margin:0;max-width:none;width:100%;padding:0 6mm;page-break-after:always;font-size:12pt}
+    .sheet{box-shadow:none;margin:0;max-width:none;width:100%;padding:0;page-break-after:always;font-size:12pt}
     .sheet:last-child{page-break-after:auto}
-    @page{size:A4;margin:14mm}
+    @page{size:A4;margin:30.5mm 20mm 20mm 30mm}
   }
 </style>
 </head>
@@ -650,9 +650,7 @@ function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 function ck(key,val){return data[key]===val?'(<span class="ck">&nbsp;X&nbsp;</span>)':'(&nbsp;&nbsp;&nbsp;)';}
 function sexo(){return data.sexo||'(&nbsp;&nbsp;)';}
 function imeiTxt(){
-  const a=f('imei_num',170);
-  if((data.imei_num2||'').trim()) return `IMEI N° 1: ${a} e IMEI N° 2: ${f('imei_num2',170)}`;
-  return `IMEI N° ${a}`;
+  return `IMEI N° 1: ${f('imei_num',150)} e IMEI N° 2: ${f('imei_num2',150)}`;
 }
 function tipoSuf(){ return (data.imei_tipo||'').trim()?` (IMEI <b>${esc(data.imei_tipo)}</b>)`:''; }
 
@@ -766,7 +764,7 @@ function tpl_a6(){return `<div class="sheet">
 function autoDesc(){
   if(data.lacrado_desc) return '<span class="fill">'+esc(data.lacrado_desc)+'</span>';
   if(data.marca||data.modelo||data.imei_num)
-    return `<span class="fill">Equipo celular marca ${esc(data.marca||'____')}, modelo ${esc(data.modelo||'____')}, color ${esc(data.color||'____')}, IMEI 1 ${esc(data.imei_num||'____')}${data.imei_num2?(' / IMEI 2 '+esc(data.imei_num2)):''}, en regular estado de conservación.</span>`;
+    return `<span class="fill">Equipo celular marca ${esc(data.marca||'____')}, modelo ${esc(data.modelo||'____')}, color ${esc(data.color||'____')}, IMEI 1 ${esc(data.imei_num||'____')} / IMEI 2 ${esc(data.imei_num2||'____')}, en regular estado de conservación.</span>`;
   return '<span class="blank" style="min-width:100%;display:block;height:54px"></span>';
 }
 
@@ -807,7 +805,7 @@ function backToForm(){document.getElementById('viewer').classList.remove('show')
 async function sharePDF(){
   if(!window.html2pdf){return loadH2P(sharePDF);}
   toast('Generando PDF…');
-  const opt={margin:[10,10,10,10],filename:fileName()+'.pdf',image:{type:'jpeg',quality:.95},
+  const opt={margin:[30.5,30,20,20],filename:fileName()+'.pdf',image:{type:'jpeg',quality:.95},
     html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy'],before:'.sheet'}};
   try{
     const blob=await html2pdf().set(opt).from(document.getElementById('docs')).output('blob');
