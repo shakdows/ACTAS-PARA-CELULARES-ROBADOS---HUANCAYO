@@ -92,6 +92,9 @@
   .chips button.other{border-style:dashed;color:var(--muted)}
   .chips button:active{transform:translateY(1px)}
   .other-input{margin-top:8px}
+  .razon-box{margin-top:8px;background:#e7ebe9;border:1px solid #c8d2cd;border-radius:10px;padding:9px 12px}
+  .razon-box .razon-label{display:block;font-size:11px;color:#5b6b62;font-weight:700;margin-bottom:2px}
+  #razonText{font-weight:800;color:var(--pnp-green);font-size:14px}
 
   .timerow{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-top:14px}
   .timerow .field{flex:1 1 30%}
@@ -213,8 +216,6 @@
       <label class="field full"><span>Operativo Policial (nombre habitual)</span><input data-k="operativo" data-profile placeholder='"IMPACTO SEGURO 2026"'></label>
       <label class="field"><span>Distrito Fiscal</span><input data-k="distrito_fiscal" data-profile value="Junín"></label>
       <label class="field"><span>Ciudad</span><input data-k="ciudad" data-profile value="Huancayo"></label>
-      <label class="field full"><span>Segundo efectivo (opcional)</span><input data-k="efectivo2" data-profile></label>
-      <label class="field full"><span>CIP N° del 2.º efectivo (opcional)</span><input data-k="efectivo2_cip" data-profile inputmode="numeric"></label>
     </div>
     <div class="profile-actions">
       <button id="btnEditProfile" class="btn primary-sm" style="display:none" onclick="editProfile()">✏️ Editar perfil</button>
@@ -237,8 +238,9 @@
       <div class="timerow">
         <label class="field"><span>Fecha</span><input data-k="fecha"></label>
         <label class="field"><span>Hora intervención</span><input data-k="hora_aprox" placeholder="10:15"></label>
-        <label class="field"><span>Hora conclusión</span><input data-k="hora_fin" placeholder="11:45"></label>
+        <label class="field"><span>Hora conclusión</span><input data-k="hora_fin" placeholder="al generar"></label>
       </div>
+      <p class="hint" style="padding-bottom:12px">La <b>hora de intervención</b> se registra sola al pulsar <b>Siguiente</b>, y la <b>hora de conclusión</b> al pulsar <b>Generar</b> (hora de Perú). Edítalas aquí solo si lo necesitas.</p>
     </details>
   </section>
 
@@ -249,37 +251,25 @@
       <label class="field full"><span>Marca</span>
         <div class="chips" data-chip="marca">
           <button type="button" data-v="Samsung">Samsung</button>
-          <button type="button" data-v="Xiaomi">Xiaomi</button>
           <button type="button" data-v="iPhone">iPhone</button>
+          <button type="button" data-v="Xiaomi">Xiaomi</button>
           <button type="button" data-v="Motorola">Motorola</button>
           <button type="button" data-v="Honor">Honor</button>
-          <button type="button" data-v="Huawei">Huawei</button>
-          <button type="button" data-v="Oppo">Oppo</button>
-          <button type="button" data-v="Realme">Realme</button>
-          <button type="button" data-v="Vivo">Vivo</button>
-          <button type="button" data-v="Tecno">Tecno</button>
-          <button type="button" data-v="Infinix">Infinix</button>
           <button type="button" class="other" data-other>Otra…</button>
         </div>
         <input class="other-input" data-other-for="marca" hidden placeholder="Especificar marca"></label>
       <label class="field"><span>Modelo</span><input data-k="modelo" placeholder="Galaxy A15"></label>
-      <label class="field"><span>N° IMEI (15 dígitos)</span><input data-k="imei_num" inputmode="numeric" maxlength="20"></label>
-      <label class="field full"><span>¿Cuál IMEI?</span>
-        <div class="seg" data-seg="imei_slot"><button type="button" data-v="1">IMEI 1</button><button type="button" data-v="2">IMEI 2</button></div></label>
-      <label class="field full"><span>Tipo de IMEI</span>
+      <label class="field"><span>IMEI 1 (15 dígitos)</span><input data-k="imei_num" inputmode="numeric" maxlength="20"></label>
+      <label class="field"><span>IMEI 2 (si tiene)</span><input data-k="imei_num2" inputmode="numeric" maxlength="20" placeholder="Opcional"></label>
+      <label class="field"><span>Tipo de IMEI</span>
         <div class="seg" data-seg="imei_tipo"><button type="button" data-v="físico">Físico</button><button type="button" data-v="lógico">Lógico</button></div></label>
       <label class="field full"><span>Color</span>
         <div class="chips" data-chip="color">
           <button type="button" data-v="Negro">Negro</button>
           <button type="button" data-v="Blanco">Blanco</button>
           <button type="button" data-v="Azul">Azul</button>
-          <button type="button" data-v="Celeste">Celeste</button>
           <button type="button" data-v="Gris">Gris</button>
-          <button type="button" data-v="Plateado">Plata</button>
           <button type="button" data-v="Dorado">Dorado</button>
-          <button type="button" data-v="Verde">Verde</button>
-          <button type="button" data-v="Rojo">Rojo</button>
-          <button type="button" data-v="Morado">Morado</button>
           <button type="button" class="other" data-other>Otro…</button>
         </div>
         <input class="other-input" data-other-for="color" hidden placeholder="Especificar color"></label>
@@ -294,19 +284,18 @@
         </div>
         <input class="other-input" data-other-for="estado_dispositivo" hidden placeholder="Especificar estado"></label>
       <label class="field full"><span>Empresa operadora</span>
-        <div class="chips" data-chip="operadora">
-          <button type="button" data-v="Claro">Claro</button>
-          <button type="button" data-v="AMÉRICA MÓVIL PERÚ S.A.C.">América Móvil Perú S.A.C.</button>
-          <button type="button" data-v="Movistar">Movistar</button>
-          <button type="button" data-v="TELEFÓNICA DEL PERÚ S.A.A.">Telefónica del Perú S.A.A.</button>
-          <button type="button" data-v="Entel">Entel</button>
-          <button type="button" data-v="ENTEL PERÚ S.A.">Entel Perú S.A.</button>
-          <button type="button" data-v="Bitel">Bitel</button>
-          <button type="button" data-v="VIETTEL PERÚ S.A.C.">Viettel Perú S.A.C.</button>
-          <button type="button" class="other" data-other>Otra…</button>
+        <div class="chips" data-opbrand>
+          <button type="button" data-brand="Claro" data-razon="AMÉRICA MÓVIL PERÚ S.A.C.">Claro</button>
+          <button type="button" data-brand="Movistar" data-razon="TELEFÓNICA DEL PERÚ S.A.A.">Movistar</button>
+          <button type="button" data-brand="Entel" data-razon="ENTEL PERÚ S.A.">Entel</button>
+          <button type="button" data-brand="Bitel" data-razon="VIETTEL PERÚ S.A.C.">Bitel</button>
+          <button type="button" class="other" data-brand="Otra">Otra…</button>
         </div>
-        <p class="hint">Toca lo que muestre el reporte de OSIPTEL: la marca o su razón social.</p>
-        <input class="other-input" data-other-for="operadora" hidden placeholder="Especificar operadora"></label>
+        <div id="razonBox" class="razon-box" hidden>
+          <span class="razon-label">🔒 Razón social (se usará en el acta)</span>
+          <span id="razonText"></span>
+        </div>
+        <input id="razonInput" class="other-input" hidden placeholder="Escribe la razón social de la otra compañía"></label>
       <label class="field"><span>Chip / SIM</span>
         <div class="seg" data-seg="chip"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
       <label class="field"><span>Equipo</span>
@@ -317,6 +306,13 @@
   <!-- PASO: EXTRAS -->
   <section class="step" data-step="extras">
     <div class="stephead"><h2>Datos adicionales <span class="opt-pill">Opcional</span></h2><p>Puedes <b>saltar este paso</b>. Lo que dejes vacío sale como línea en blanco para llenar a mano.</p></div>
+    <details class="mini" id="detEfectivo2">
+      <summary>➕ ¿Te acompañó otro efectivo? (opcional)</summary>
+      <div class="grid" style="margin-top:4px">
+        <label class="field full"><span>Segundo efectivo (Apellidos y Nombres)</span><input data-k="efectivo2"></label>
+        <label class="field full"><span>CIP N° del 2.º efectivo</span><input data-k="efectivo2_cip" inputmode="numeric"></label>
+      </div>
+    </details>
     <div class="grid">
       <div class="subhead">Datos personales del intervenido</div>
       <label class="field"><span>Natural de</span><input data-k="natural"></label>
@@ -459,16 +455,22 @@ function showStep(i){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function goStep(i){showStep(i);}
-function nextStep(){ if(STEPS[curStep].id==='generar'){generate();return;} showStep(curStep+1); }
+function nextStep(){
+  if(STEPS[curStep].id==='intervenido' && !horaAproxManual){const t=limaHHMM();data.hora_inicio=t;setVal('hora_aprox',t);persist();}
+  if(STEPS[curStep].id==='generar'){generate();return;}
+  showStep(curStep+1);
+}
 function prevStep(){ showStep(curStep-1); }
 function buildResumen(){
   const eq=[data.marca,data.modelo].filter(Boolean).join(' ')||'—';
+  const imeis=(data.imei_num||'—')+((data.imei_num2||'').trim()?(' · IMEI 2: '+data.imei_num2):'');
   document.getElementById('resumen').innerHTML=
     `<div><b>Intervenido:</b> ${data.nombre||'—'} ${data.sexo||''}</div>`+
     `<div><b>DNI:</b> ${data.dni||'—'}</div>`+
     `<div><b>Equipo:</b> ${eq}</div>`+
-    `<div><b>IMEI ${data.imei_slot||'1'}:</b> ${data.imei_num||'—'} ${data.imei_tipo?('('+data.imei_tipo+')'):''}</div>`+
-    `<div><b>Estado:</b> ${data.estado_dispositivo||'—'} · <b>Operadora:</b> ${data.operadora||'—'}</div>`;
+    `<div><b>IMEI 1:</b> ${imeis} ${data.imei_tipo?('('+data.imei_tipo+')'):''}</div>`+
+    `<div><b>Estado:</b> ${data.estado_dispositivo||'—'}</div>`+
+    `<div><b>Operadora:</b> ${data.operadora||'—'}</div>`;
 }
 
 const ACTAS=[
@@ -494,6 +496,8 @@ function init(){
     if(el.value && data[el.dataset.k]==null) data[el.dataset.k]=el.value;
     el.addEventListener('input',()=>{data[el.dataset.k]=el.value;updateProgress();persist();});
   });
+  const ha=document.querySelector('[data-k="hora_aprox"]');if(ha)ha.addEventListener('input',()=>horaAproxManual=true);
+  const hf=document.querySelector('[data-k="hora_fin"]');if(hf)hf.addEventListener('input',()=>horaFinManual=true);
   document.querySelectorAll('[data-seg]').forEach(seg=>{
     const key=seg.dataset.seg;
     seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
@@ -519,6 +523,7 @@ function init(){
     }));
     if(otherInput) otherInput.addEventListener('input',()=>{data[key]=otherInput.value;updateProgress();persist();});
   });
+  initOperadora();
   loadProfile();
   loadCase();
   autoDateTime();
@@ -531,14 +536,28 @@ function init(){
   showStep(configured?1:0);
 }
 
-/* ---------- FECHA / HORA AUTO ---------- */
-function autoDateTime(){
+/* ---------- FECHA / HORA (PERÚ · America/Lima) ---------- */
+let horaAproxManual=false, horaFinManual=false;
+function limaHHMM(){
+  try{
+    const p=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Lima',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+    return ((p.find(x=>x.type==='hour')||{}).value||'00')+':'+((p.find(x=>x.type==='minute')||{}).value||'00');
+  }catch(e){const n=new Date();return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
+}
+function limaFecha(){
   const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  const n=new Date();
-  if(!data.fecha) data.fecha=`${String(n.getDate()).padStart(2,'0')} de ${M[n.getMonth()]} del ${n.getFullYear()}`;
-  const hhmm=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
-  if(!data.hora_inicio) data.hora_inicio=hhmm;
-  if(!data.hora_aprox) data.hora_aprox=hhmm;
+  try{
+    const p=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+    const y=(p.find(x=>x.type==='year')||{}).value, mo=parseInt((p.find(x=>x.type==='month')||{}).value,10), da=(p.find(x=>x.type==='day')||{}).value;
+    return da+' de '+M[mo-1]+' del '+y;
+  }catch(e){const n=new Date();return String(n.getDate()).padStart(2,'0')+' de '+M[n.getMonth()]+' del '+n.getFullYear();}
+}
+function setVal(key,val){data[key]=val;const el=document.querySelector('[data-k="'+key+'"]');if(el)el.value=val;}
+function autoDateTime(){
+  if(!data.fecha) data.fecha=limaFecha();
+  const t=limaHHMM();
+  if(!data.hora_inicio) data.hora_inicio=t;
+  if(!data.hora_aprox) data.hora_aprox=t;
   if(!data.imei_slot) data.imei_slot='1';
 }
 
@@ -566,6 +585,8 @@ function applyToForm(){
     else if(otherInput){otherInput.hidden=true;if(matched)otherInput.value='';}
   });
   document.querySelectorAll('[data-acta]').forEach(c=>{const a=ACTAS.find(x=>x.id===c.dataset.acta);if(a)c.checked=a.on;});
+  applyOperadora();
+  const de=document.getElementById('detEfectivo2');if(de)de.open=!!(data.efectivo2||data.efectivo2_cip);
 }
 function refreshPerfilTag(){
   const ok=data.instructor&&data.comisaria;
@@ -601,6 +622,8 @@ function newCase(){
   document.querySelectorAll('[data-k]').forEach(el=>{if(!profileKeys.includes(el.dataset.k))el.value='';});
   document.querySelectorAll('[data-seg] button').forEach(b=>b.classList.remove('on'));
   try{localStorage.removeItem(CKEY);}catch(e){}
+  horaAproxManual=false;horaFinManual=false;
+  delete data.hora_aprox;delete data.hora_inicio;delete data.hora_fin;
   autoDateTime();applyToForm();updateProgress();
   toast('Caso nuevo listo');showStep(1);
 }
@@ -626,11 +649,40 @@ function f(key,minw){const v=gv(key);return v?`<span class="fill">${esc(v)}</spa
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function ck(key,val){return data[key]===val?'(<span class="ck">&nbsp;X&nbsp;</span>)':'(&nbsp;&nbsp;&nbsp;)';}
 function sexo(){return data.sexo||'(&nbsp;&nbsp;)';}
+function imeiTxt(){
+  const a=f('imei_num',170);
+  if((data.imei_num2||'').trim()) return `IMEI N° 1: ${a} e IMEI N° 2: ${f('imei_num2',170)}`;
+  return `IMEI N° ${a}`;
+}
+function tipoSuf(){ return (data.imei_tipo||'').trim()?` (IMEI <b>${esc(data.imei_tipo)}</b>)`:''; }
+
+/* ---------- OPERADORA (marca + razón social bloqueada) ---------- */
+function initOperadora(){
+  const g=document.querySelector('[data-opbrand]');if(!g)return;
+  const box=document.getElementById('razonBox'),txt=document.getElementById('razonText'),inp=document.getElementById('razonInput');
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    g.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    const brand=b.dataset.brand;data.operadora_marca=brand;
+    if(brand==='Otra'){box.hidden=true;inp.hidden=false;inp.focus();data.operadora=inp.value||'';}
+    else{inp.hidden=true;data.operadora=b.dataset.razon;txt.textContent=b.dataset.razon;box.hidden=false;}
+    updateProgress();persist();
+  }));
+  inp.addEventListener('input',()=>{data.operadora=inp.value;updateProgress();persist();});
+}
+function applyOperadora(){
+  const g=document.querySelector('[data-opbrand]');if(!g)return;
+  const box=document.getElementById('razonBox'),txt=document.getElementById('razonText'),inp=document.getElementById('razonInput');
+  const brand=data.operadora_marca;
+  g.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.brand===brand&&!!brand));
+  if(brand==='Otra'){box.hidden=true;inp.hidden=false;inp.value=data.operadora||'';}
+  else if(brand){const b=g.querySelector('[data-brand="'+brand+'"]');if(b){txt.textContent=b.dataset.razon;box.hidden=false;data.operadora=b.dataset.razon;}inp.hidden=true;}
+  else{box.hidden=true;inp.hidden=true;}
+}
 
 /* ---------- PLANTILLAS ---------- */
 function tpl_intervencion(){return `<div class="sheet">
   <h3>Acta de Intervención Policial N°</h3>
-  <p>--- En el distrito de ${f('distrito')} provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, ubicados en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, en compañía de ${f('efectivo2',170)} identificado con CIP Nro. ${f('efectivo2_cip')}, ambos pertenecientes a la ${f('unidad',170)}; dan cuenta que en circunstancias que nos encontrábamos realizando actuaciones propias de nuestra función policial y a mérito del desarrollo del <b>OPERATIVO POLICIAL "</b>${f('operativo')}<b>"</b>; bajo el mando de ${f('jefe',190)}, se intervino en ${f('lugar',210)}, a horas ${f('hora_aprox',70)} aprox., a la persona de ${f('nombre',210)} ${sexo()}, natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, hijo de Don ${f('padre')} y Doña ${f('madre')}, con grado de instrucción ${f('instruccion')}, de profesión y/o ocupación ${f('ocupacion')}, identificado con DNI Nro. ${f('dni')} con teléfono celular Nro. ${f('celular')}, correo electrónico ${f('correo',170)} y domiciliado actualmente en ${f('domicilio',230)}; a quien se le solicitó cordialmente pueda proporcionar el Nro. de IMEI de su equipo móvil, accediendo y de forma <b>VOLUNTARIA</b> proporcionó un código de quince dígitos, verificando así que el IMEI ${f('imei_slot',40)} (${f('imei_tipo',70)}) presenta la siguiente numeración: ${f('imei_num',180)}, el mismo que al ser ingresado y consultado en el Registro Nacional de Equipos Terminales Móviles para la Seguridad - RENTESEG a través de la plataforma virtual de OSIPTEL, informó lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}. Asimismo, se hace mención que el equipo móvil tiene las siguientes características: Marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')} con número telefónico: ${f('num_telefonico')}.</p>
+  <p>--- En el distrito de ${f('distrito')} provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, ubicados en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, en compañía de ${f('efectivo2',170)} identificado con CIP Nro. ${f('efectivo2_cip')}, ambos pertenecientes a la ${f('unidad',170)}; dan cuenta que en circunstancias que nos encontrábamos realizando actuaciones propias de nuestra función policial y a mérito del desarrollo del <b>OPERATIVO POLICIAL "</b>${f('operativo')}<b>"</b>; bajo el mando de ${f('jefe',190)}, se intervino en ${f('lugar',210)}, a horas ${f('hora_aprox',70)} aprox., a la persona de ${f('nombre',210)} ${sexo()}, natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, hijo de Don ${f('padre')} y Doña ${f('madre')}, con grado de instrucción ${f('instruccion')}, de profesión y/o ocupación ${f('ocupacion')}, identificado con DNI Nro. ${f('dni')} con teléfono celular Nro. ${f('celular')}, correo electrónico ${f('correo',170)} y domiciliado actualmente en ${f('domicilio',230)}; a quien se le solicitó cordialmente pueda proporcionar el Nro. de IMEI de su equipo móvil, accediendo y de forma <b>VOLUNTARIA</b> proporcionó el código de quince dígitos, verificando así la siguiente numeración: ${imeiTxt()}${tipoSuf()}, el mismo que al ser ingresado y consultado en el Registro Nacional de Equipos Terminales Móviles para la Seguridad - RENTESEG a través de la plataforma virtual de OSIPTEL, informó lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}. Asimismo, se hace mención que el equipo móvil tiene las siguientes características: Marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')} con número telefónico: ${f('num_telefonico')}.</p>
   <p>Ante lo expuesto, se le procede a informar el motivo de su <b>DETENCIÓN</b>; por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>, en agravio de Persona en Proceso de Identificación; haciéndole saber de ello y los derechos que le asisten en su calidad de <b>DETENIDO</b>, los mismos que se encuentran contenidos en el Artículo 71° del Código Procesal Penal vigente. En ese sentido, la persona antes señalada fue trasladada a la Comisaría PNP ${f('comisaria')}, con el fin de realizar las diligencias correspondientes. Se pone a disposición de la Comisaría PNP ${f('comisaria')}, en calidad de <b>DETENIDO</b> a la persona de ${f('nombre',210)} ${sexo()} identificado con DNI Nro. ${f('dni')}, adjuntando al presente un (01) Acta de Consentimiento para Verificación de Número de IMEI, un (01) Acta de Entrega, Recepción, Incautación y Lacrado de equipo móvil, una (01) Impresión del reporte de OSIPTEL, un (01) Acta de Detención, un (01) Acta de Lectura de Derechos, una (01) Constancia de Buen Trato, un (01) Acta de Registro Personal, y una (01) mica transparente debidamente lacrada y rotulada, conteniendo la evidencia, con su respectivo formato A-6 y A-7 del procedimiento de la Cadena de Custodia.</p>
   <p>Finalmente, de todo lo indicado se puso en conocimiento del RMP ${f('rmp',210)} ${f('rmp_via',110)}, al número telefónico ${f('rmp_telefono')}.</p>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')}, se da por concluida la presente diligencia y una vez leída por los participantes se procede a firmar en señal de conformidad. ---</p>
@@ -639,7 +691,7 @@ function tpl_intervencion(){return `<div class="sheet">
 function tpl_consentimiento(){return `<div class="sheet">
   <h3>Acta de Consentimiento para Verificación de Número de IMEI de Equipo Móvil-Celular</h3>
   <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presente el instructor, se intervino en ${f('lugar',230)} a la persona identificada como ${f('nombre',210)} ${sexo()} con DNI Nro. ${f('dni')}, domiciliado en ${f('domicilio',210)}, quien da su <b>CONSENTIMIENTO VOLUNTARIO</b> para la verificación del número de IMEI de su equipo celular de Marca: ${f('marca')}, Modelo: ${f('modelo')} de color ${f('color')} en la plataforma virtual del <b>REGESENT</b> de <b>OSIPTEL</b>. Se procedió a realizar la verificación del IMEI del equipo móvil-celular, conforme al detalle siguiente: ---</p>
-  <p><b>PRIMERO:</b> La persona antes indicada de forma voluntaria procedió a digitar el código <b>*#06#</b> en su equipo celular proporcionando un código de IMEI de quince dígitos; al verificar el IMEI ${f('imei_slot',40)} (${f('imei_tipo',70)}) con número ${f('imei_num',180)}, dichos datos fueron ingresados a la plataforma virtual de <b>OSIPTEL</b>, obteniendo como resultado lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}.</p>
+  <p><b>PRIMERO:</b> La persona antes indicada de forma voluntaria procedió a digitar el código <b>*#06#</b> en su equipo celular proporcionando un código de IMEI de quince dígitos; al verificar la siguiente numeración: ${imeiTxt()}${tipoSuf()}, dichos datos fueron ingresados a la plataforma virtual de <b>OSIPTEL</b>, obteniendo como resultado lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}.</p>
   <p><b>SEGUNDO:</b> Asimismo se le hizo de conocimiento que el IMEI de su equipo celular se encuentra reportado como ${f('reportado_como')}, por lo que se encontraría inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>.</p>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')} se da por concluida la presente, firmando los participantes en señal de conformidad. ---</p>
   ${signBlock('EL INSTRUCTOR PNP','INTERVENIDO')}</div>`;}
@@ -648,8 +700,8 @@ function tpl_incautacion(){return `<div class="sheet">
   <h3>Acta de Entrega, Recepción, Incautación y Lacrado de Equipo Móvil</h3>
   <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presentes en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')} y la persona de ${f('nombre',210)} ${sexo()}, identificado con DNI Nro. ${f('dni')} y domiciliado actualmente en ${f('domicilio',210)}; se procede a redactar la presente <b>"ACTA DE ENTREGA, RECEPCIÓN, INCAUTACIÓN Y LACRADO DE EQUIPO MÓVIL"</b>, bajo los siguientes detalles:</p>
   <ul>
-    <li>Durante la intervención policial a la persona señalada, a mérito del <b>Operativo Policial</b> "${f('operativo')}", y al verificar el IMEI Nro. ${f('imei_num',180)}, entregado en forma voluntaria, dio como resultado en el RENTESEG de OSIPTEL: <b>ESTADO DEL DISPOSITIVO</b> ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}; se le informó que se encuentra ${f('reportado_como')}, por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>.</li>
-    <li>Ante lo señalado, se le solicita entregue el bien (equipo móvil), quien de forma voluntaria hace entrega; es recibida y se procede a la <b>INCAUTACIÓN</b> del equipo móvil de marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')}, IMEI Nro. ${f('imei_num',180)}, de la empresa de telefonía ${f('operadora')}, chip: SI ${ck('chip','SI')} NO ${ck('chip','NO')}, el mismo que fue encontrado ENCENDIDO ${ck('estado_equipo','ENCENDIDO')} / APAGADO ${ck('estado_equipo','APAGADO')}; en regular estado de conservación.</li>
+    <li>Durante la intervención policial a la persona señalada, a mérito del <b>Operativo Policial</b> "${f('operativo')}", y al verificar ${imeiTxt()}, entregado en forma voluntaria, dio como resultado en el RENTESEG de OSIPTEL: <b>ESTADO DEL DISPOSITIVO</b> ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}; se le informó que se encuentra ${f('reportado_como')}, por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>.</li>
+    <li>Ante lo señalado, se le solicita entregue el bien (equipo móvil), quien de forma voluntaria hace entrega; es recibida y se procede a la <b>INCAUTACIÓN</b> del equipo móvil de marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')}, ${imeiTxt()}, de la empresa de telefonía ${f('operadora')}, chip: SI ${ck('chip','SI')} NO ${ck('chip','NO')}, el mismo que fue encontrado ENCENDIDO ${ck('estado_equipo','ENCENDIDO')} / APAGADO ${ck('estado_equipo','APAGADO')}; en regular estado de conservación.</li>
     <li>Sobre la evidencia descrita, esta procede a ser ingresada y lacrada conforme al detalle siguiente: ${data.lacrado_desc?('<span class="fill">'+esc(data.lacrado_desc)+'</span>'):'<span class="blank" style="min-width:100%;display:block;height:46px"></span>'} con su respectivo rotulado, siguiendo los procedimientos establecidos de <b>CADENA DE CUSTODIA</b>.</li>
   </ul>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')}, se da por concluida la presente diligencia, firmando los participantes en señal de conformidad. ---</p>
@@ -670,7 +722,7 @@ function tpl_derechos(){return `<div class="sheet">
   <p>IDENTIFICADO CON DNI Nro. ${f('dni')} QUE ES IMPUTADO POR ENCONTRARSE INMERSO EN EL PRESUNTO DELITO CONTRA EL PATRIMONIO EN LA MODALIDAD DE <b>RECEPTACIÓN</b>.</p>
   <p><b>Y QUE EN DICHA CONDICIÓN TIENE LOS SIGUIENTES DERECHOS (Art. 71° CPP):</b></p>
   ${rightsTable()}
-  <p>Del mismo modo, la causa o motivo de la detención es a razón de la intervención policial realizada en el Operativo Policial "${f('operativo')}", a horas ${f('hora_aprox',70)}, del ${f('fecha')}; el mismo que presentaba un equipo móvil con IMEI Nro. ${f('imei_num',180)}, que informó según el RENTESEG de OSIPTEL con ESTADO DEL DISPOSITIVO: ${f('estado_dispositivo')}.</p>
+  <p>Del mismo modo, la causa o motivo de la detención es a razón de la intervención policial realizada en el Operativo Policial "${f('operativo')}", a horas ${f('hora_aprox',70)}, del ${f('fecha')}; el mismo que presentaba un equipo móvil con ${imeiTxt()}, que informó según el RENTESEG de OSIPTEL con ESTADO DEL DISPOSITIVO: ${f('estado_dispositivo')}.</p>
   <p>Ante ello, la persona indica que:</p>
   <ul>
     <li>Se comunique su detención a: ${f('comunicar_a',190)}, con quien tiene el parentesco de ${f('parentesco')}, con teléfono: ${f('comunicar_telefono')}.</li>
@@ -714,7 +766,7 @@ function tpl_a6(){return `<div class="sheet">
 function autoDesc(){
   if(data.lacrado_desc) return '<span class="fill">'+esc(data.lacrado_desc)+'</span>';
   if(data.marca||data.modelo||data.imei_num)
-    return `<span class="fill">Equipo celular marca ${esc(data.marca||'____')}, modelo ${esc(data.modelo||'____')}, color ${esc(data.color||'____')}, IMEI ${esc(data.imei_num||'____')}, en regular estado de conservación.</span>`;
+    return `<span class="fill">Equipo celular marca ${esc(data.marca||'____')}, modelo ${esc(data.modelo||'____')}, color ${esc(data.color||'____')}, IMEI 1 ${esc(data.imei_num||'____')}${data.imei_num2?(' / IMEI 2 '+esc(data.imei_num2)):''}, en regular estado de conservación.</span>`;
   return '<span class="blank" style="min-width:100%;display:block;height:54px"></span>';
 }
 
@@ -739,6 +791,7 @@ const RENDER={intervencion:tpl_intervencion,consentimiento:tpl_consentimiento,in
 
 /* ---------- GENERAR ---------- */
 function generate(){
+  if(!horaFinManual){setVal('hora_fin',limaHHMM());persist();}
   const miss=ESSENTIAL.filter(k=>!(data[k]||'').toString().trim());
   if(miss.includes('nombre')||miss.includes('dni')||miss.includes('imei_num')){
     if(!confirm('Faltan datos esenciales (nombre/DNI/IMEI). ¿Generar igual con líneas en blanco?'))return;
