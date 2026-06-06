@@ -75,6 +75,9 @@
   input,select,textarea{width:100%;font-family:inherit;font-size:16px;color:var(--ink);
     padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fcfdfc;transition:border-color .15s,box-shadow .15s}
   input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pnp-green-2);box-shadow:0 0 0 3px rgba(16,102,63,.12)}
+  input:disabled,textarea:disabled{background:#eef1ef;color:#3a463f;-webkit-text-fill-color:#3a463f;opacity:1;border-style:dashed;cursor:not-allowed}
+  .lock-badge{font-size:11px;font-weight:800;color:#5b4a16;background:#f0d68a;padding:3px 10px;border-radius:99px}
+  .profile-actions{margin-top:16px}
   textarea{resize:vertical;min-height:70px;line-height:1.45}
   .hint{font-size:11px;color:var(--muted);margin-top:4px}
 
@@ -103,6 +106,30 @@
   .fab .wrap{max-width:880px;margin:0 auto;display:flex;gap:10px}
   .btn.primary{flex:1;justify-content:center;background:linear-gradient(135deg,var(--pnp-green),var(--pnp-green-2));
     color:#fff;border:none;font-size:16px;padding:14px;box-shadow:0 6px 18px rgba(12,74,47,.28)}
+
+  .stepper{display:flex;gap:6px;overflow-x:auto;padding:2px 0 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .stepper::-webkit-scrollbar{display:none}
+  .stepper button{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:12.5px;font-weight:700;color:var(--muted)}
+  .stepper button .n{width:20px;height:20px;border-radius:50%;background:#e7ecea;color:var(--muted);display:grid;place-items:center;font-size:11px;font-weight:800}
+  .stepper button.active{background:var(--pnp-green);color:#fff;border-color:var(--pnp-green)}
+  .stepper button.active .n{background:rgba(255,255,255,.25);color:#fff}
+  .stepper button.done{border-color:#bfe0cb}
+  .stepper button.done .n{background:var(--ok);color:#fff}
+
+  .step{display:none;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 16px}
+  .step.show{display:block;animation:fade .22s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  .stephead{margin-bottom:4px}
+  .stephead h2{font-size:19px;margin:0;font-weight:800;color:var(--pnp-green);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .stephead p{margin:6px 0 0;font-size:13px;color:var(--muted);font-weight:500;line-height:1.45}
+  .opt-pill{font-size:11px;font-weight:800;color:#3a2c08;background:#f0d68a;padding:3px 10px;border-radius:99px}
+  .btn.primary-sm{margin-top:16px;background:var(--pnp-green);color:#fff;border:none;width:100%;justify-content:center;padding:13px;font-size:15px;border-radius:12px}
+  details.mini{margin-top:16px;border:1px dashed var(--line);border-radius:10px;padding:0 12px}
+  details.mini summary{list-style:none;cursor:pointer;padding:12px 0;font-weight:600;font-size:13px;color:var(--pnp-green)}
+  details.mini summary::-webkit-details-marker{display:none}
+  .resumen{background:#f3f7f4;border:1px solid #d7e3da;border-radius:12px;padding:13px 15px;font-size:14px;line-height:1.75}
+  .resumen b{color:var(--pnp-green)}
+  #btnPrev{flex:0 0 auto}
 
   #viewer{display:none}#viewer.show{display:block}
   body.viewing header.app,body.viewing .toolbar,body.viewing #form,body.viewing .fab{display:none !important}
@@ -169,220 +196,224 @@
 
 <main id="form">
 
-  <div class="note">
-    <span>✅</span>
-    <span><b>Llena solo lo esencial.</b> Tu perfil se guarda una vez y ya no lo reescribes. Lo que dejes vacío saldrá como línea en blanco en el acta para completar a mano.</span>
-  </div>
+  <div class="stepper" id="stepper"></div>
 
-  <!-- PERFIL (UNA SOLA VEZ) -->
-  <details class="sec" id="secPerfil">
-    <summary>
-      <span class="secnum cfg">★</span> Mi perfil <span class="meta"><span class="tag" id="perfilTag">Configurar</span><span class="chev">▾</span></span>
-    </summary>
-    <div class="secbody">
-      <p class="hint" style="margin-top:10px">Se guarda en este equipo. No se borra al iniciar un caso nuevo.</p>
-      <div class="grid">
-        <label class="field full"><span>Instructor (Apellidos y Nombres)</span><input data-k="instructor" data-profile placeholder="SOT3 PNP ..."></label>
-        <label class="field"><span>CIP N°</span><input data-k="instructor_cip" data-profile inputmode="numeric"></label>
-        <label class="field"><span>Cargo</span><input data-k="servidor_cargo" data-profile value="Instructor"></label>
-        <label class="field full"><span>Comisaría PNP</span><input data-k="comisaria" data-profile placeholder="Comisaría PNP El Tambo"></label>
-        <label class="field"><span>Distrito</span><input data-k="distrito" data-profile placeholder="El Tambo"></label>
-        <label class="field"><span>Provincia</span><input data-k="provincia" data-profile value="Huancayo"></label>
-        <label class="field full"><span>Unidad / Dependencia / División</span><input data-k="unidad" data-profile placeholder="DEPINCRI / Sección de Investigación"></label>
-        <label class="field full"><span>Bajo el mando de</span><input data-k="jefe" data-profile></label>
-        <label class="field full"><span>Operativo Policial (nombre habitual)</span><input data-k="operativo" data-profile placeholder='"IMPACTO SEGURO 2026"'></label>
-        <label class="field"><span>Distrito Fiscal</span><input data-k="distrito_fiscal" data-profile value="Junín"></label>
-        <label class="field"><span>Ciudad</span><input data-k="ciudad" data-profile value="Huancayo"></label>
-        <label class="field full"><span>Segundo efectivo (opcional)</span><input data-k="efectivo2" data-profile></label>
-        <label class="field full"><span>CIP N° del 2.º efectivo (opcional)</span><input data-k="efectivo2_cip" data-profile inputmode="numeric"></label>
-      </div>
-      <button class="btn" style="margin-top:12px;background:var(--pnp-green);color:#fff;border:none" onclick="saveProfile()">Guardar perfil</button>
+  <!-- PASO: PERFIL -->
+  <section class="step" data-step="perfil">
+    <div class="stephead"><h2>Mi perfil <span id="lockBadge" class="lock-badge" style="display:none">🔒 Bloqueado</span></h2><p>Tus datos como instructor (se llenan una sola vez). Cuando te reasignen de comisaría o unidad, toca <b>Editar</b>.</p></div>
+    <div class="grid">
+      <label class="field full"><span>Instructor (Apellidos y Nombres)</span><input data-k="instructor" data-profile placeholder="SOT3 PNP ..."></label>
+      <label class="field"><span>CIP N°</span><input data-k="instructor_cip" data-profile inputmode="numeric"></label>
+      <label class="field"><span>Cargo</span><input data-k="servidor_cargo" data-profile value="Instructor"></label>
+      <label class="field full"><span>Comisaría PNP</span><input data-k="comisaria" data-profile placeholder="Comisaría PNP El Tambo"></label>
+      <label class="field"><span>Distrito</span><input data-k="distrito" data-profile placeholder="El Tambo"></label>
+      <label class="field"><span>Provincia</span><input data-k="provincia" data-profile value="Huancayo"></label>
+      <label class="field full"><span>Unidad / Dependencia / División</span><input data-k="unidad" data-profile placeholder="DEPINCRI / Sección de Investigación"></label>
+      <label class="field full"><span>Bajo el mando de</span><input data-k="jefe" data-profile></label>
+      <label class="field full"><span>Operativo Policial (nombre habitual)</span><input data-k="operativo" data-profile placeholder='"IMPACTO SEGURO 2026"'></label>
+      <label class="field"><span>Distrito Fiscal</span><input data-k="distrito_fiscal" data-profile value="Junín"></label>
+      <label class="field"><span>Ciudad</span><input data-k="ciudad" data-profile value="Huancayo"></label>
+      <label class="field full"><span>Segundo efectivo (opcional)</span><input data-k="efectivo2" data-profile></label>
+      <label class="field full"><span>CIP N° del 2.º efectivo (opcional)</span><input data-k="efectivo2_cip" data-profile inputmode="numeric"></label>
     </div>
-  </details>
+    <div class="profile-actions">
+      <button id="btnEditProfile" class="btn primary-sm" style="display:none" onclick="editProfile()">✏️ Editar perfil</button>
+      <button id="btnSaveProfile" class="btn primary-sm" onclick="saveProfile()">Guardar y bloquear →</button>
+    </div>
+  </section>
 
-  <!-- CASO: ESENCIAL -->
-  <details class="sec" open>
-    <summary><span class="secnum">1</span> Datos del caso <span class="meta"><span class="tag ok">Lo esencial</span><span class="chev">▾</span></span></summary>
-    <div class="secbody">
-
+  <!-- PASO: INTERVENIDO -->
+  <section class="step" data-step="intervenido">
+    <div class="stephead"><h2>Persona intervenida</h2><p>Solo unos datos. La fecha y hora ya están puestas con hoy/ahora.</p></div>
+    <div class="grid">
+      <label class="field full"><span>Apellidos y Nombres</span><input data-k="nombre" placeholder="PÉREZ QUISPE, Juan Carlos"></label>
+      <label class="field"><span>DNI N°</span><input data-k="dni" inputmode="numeric"></label>
+      <label class="field"><span>Sexo</span>
+        <div class="seg" data-seg="sexo"><button type="button" data-v="(M)">M</button><button type="button" data-v="(F)">F</button></div></label>
+      <label class="field full"><span>Lugar de la intervención</span><input data-k="lugar" placeholder="Jr. ... cuadra ..., El Tambo"></label>
+    </div>
+    <details class="mini">
+      <summary>🕐 Ajustar fecha y hora (opcional)</summary>
       <div class="timerow">
         <label class="field"><span>Fecha</span><input data-k="fecha"></label>
         <label class="field"><span>Hora intervención</span><input data-k="hora_aprox" placeholder="10:15"></label>
         <label class="field"><span>Hora conclusión</span><input data-k="hora_fin" placeholder="11:45"></label>
       </div>
-      <p class="hint">La fecha y hora se completan solas con hoy/ahora. Cámbialas si hace falta.</p>
+    </details>
+  </section>
 
-      <div class="grid">
-        <div class="subhead">Persona intervenida</div>
-        <label class="field full"><span>Apellidos y Nombres</span><input data-k="nombre" placeholder="PÉREZ QUISPE, Juan Carlos"></label>
-        <label class="field"><span>DNI N°</span><input data-k="dni" inputmode="numeric"></label>
-        <label class="field"><span>Sexo</span>
-          <div class="seg" data-seg="sexo"><button type="button" data-v="(M)">M</button><button type="button" data-v="(F)">F</button></div></label>
-        <label class="field full"><span>Lugar de la intervención</span><input data-k="lugar" placeholder="Jr. ... cuadra ..., El Tambo"></label>
-
-        <div class="subhead">Equipo móvil</div>
-        <label class="field full"><span>Marca</span>
-          <div class="chips" data-chip="marca">
-            <button type="button" data-v="Samsung">Samsung</button>
-            <button type="button" data-v="Xiaomi">Xiaomi</button>
-            <button type="button" data-v="iPhone">iPhone</button>
-            <button type="button" data-v="Motorola">Motorola</button>
-            <button type="button" data-v="Honor">Honor</button>
-            <button type="button" data-v="Huawei">Huawei</button>
-            <button type="button" data-v="Oppo">Oppo</button>
-            <button type="button" data-v="Realme">Realme</button>
-            <button type="button" data-v="Vivo">Vivo</button>
-            <button type="button" data-v="Tecno">Tecno</button>
-            <button type="button" data-v="Infinix">Infinix</button>
-            <button type="button" class="other" data-other>Otra…</button>
-          </div>
-          <input class="other-input" data-other-for="marca" hidden placeholder="Especificar marca"></label>
-        <label class="field"><span>Modelo</span><input data-k="modelo" placeholder="Galaxy A15"></label>
-        <label class="field"><span>N° IMEI (15 dígitos)</span><input data-k="imei_num" inputmode="numeric" maxlength="20"></label>
-        <label class="field full"><span>Color</span>
-          <div class="chips" data-chip="color">
-            <button type="button" data-v="Negro">Negro</button>
-            <button type="button" data-v="Blanco">Blanco</button>
-            <button type="button" data-v="Azul">Azul</button>
-            <button type="button" data-v="Celeste">Celeste</button>
-            <button type="button" data-v="Gris">Gris</button>
-            <button type="button" data-v="Plateado">Plata</button>
-            <button type="button" data-v="Dorado">Dorado</button>
-            <button type="button" data-v="Verde">Verde</button>
-            <button type="button" data-v="Rojo">Rojo</button>
-            <button type="button" data-v="Morado">Morado</button>
-            <button type="button" class="other" data-other>Otro…</button>
-          </div>
-          <input class="other-input" data-other-for="color" hidden placeholder="Especificar color"></label>
-        <label class="field full"><span>Estado (RENTESEG)</span>
-          <div class="chips" data-chip="estado_dispositivo">
-            <button type="button" data-v="ROBADO">Robado</button>
-            <button type="button" data-v="HURTADO">Hurtado</button>
-            <button type="button" data-v="NORMAL">Normal</button>
-            <button type="button" data-v="NO REGISTRADO">No registrado</button>
-            <button type="button" class="other" data-other>Otro…</button>
-          </div>
-          <input class="other-input" data-other-for="estado_dispositivo" hidden placeholder="Especificar estado"></label>
-        <label class="field full"><span>Empresa operadora</span>
-          <div class="chips" data-chip="operadora">
-            <button type="button" data-v="Claro">Claro</button>
-            <button type="button" data-v="Movistar">Movistar</button>
-            <button type="button" data-v="Entel">Entel</button>
-            <button type="button" data-v="Bitel">Bitel</button>
-            <button type="button" class="other" data-other>Otra…</button>
-          </div>
-          <input class="other-input" data-other-for="operadora" hidden placeholder="Especificar operadora"></label>
-        <label class="field"><span>Chip / SIM</span>
-          <div class="seg" data-seg="chip"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
-        <label class="field"><span>Equipo</span>
-          <div class="seg" data-seg="estado_equipo"><button type="button" data-v="ENCENDIDO">Encendido</button><button type="button" data-v="APAGADO">Apagado</button></div></label>
-      </div>
+  <!-- PASO: EQUIPO -->
+  <section class="step" data-step="equipo">
+    <div class="stephead"><h2>Equipo móvil</h2><p>Toca las opciones. Solo se escriben el modelo y el IMEI.</p></div>
+    <div class="grid">
+      <label class="field full"><span>Marca</span>
+        <div class="chips" data-chip="marca">
+          <button type="button" data-v="Samsung">Samsung</button>
+          <button type="button" data-v="Xiaomi">Xiaomi</button>
+          <button type="button" data-v="iPhone">iPhone</button>
+          <button type="button" data-v="Motorola">Motorola</button>
+          <button type="button" data-v="Honor">Honor</button>
+          <button type="button" data-v="Huawei">Huawei</button>
+          <button type="button" data-v="Oppo">Oppo</button>
+          <button type="button" data-v="Realme">Realme</button>
+          <button type="button" data-v="Vivo">Vivo</button>
+          <button type="button" data-v="Tecno">Tecno</button>
+          <button type="button" data-v="Infinix">Infinix</button>
+          <button type="button" class="other" data-other>Otra…</button>
+        </div>
+        <input class="other-input" data-other-for="marca" hidden placeholder="Especificar marca"></label>
+      <label class="field"><span>Modelo</span><input data-k="modelo" placeholder="Galaxy A15"></label>
+      <label class="field"><span>N° IMEI (15 dígitos)</span><input data-k="imei_num" inputmode="numeric" maxlength="20"></label>
+      <label class="field full"><span>¿Cuál IMEI?</span>
+        <div class="seg" data-seg="imei_slot"><button type="button" data-v="1">IMEI 1</button><button type="button" data-v="2">IMEI 2</button></div></label>
+      <label class="field full"><span>Tipo de IMEI</span>
+        <div class="seg" data-seg="imei_tipo"><button type="button" data-v="físico">Físico</button><button type="button" data-v="lógico">Lógico</button></div></label>
+      <label class="field full"><span>Color</span>
+        <div class="chips" data-chip="color">
+          <button type="button" data-v="Negro">Negro</button>
+          <button type="button" data-v="Blanco">Blanco</button>
+          <button type="button" data-v="Azul">Azul</button>
+          <button type="button" data-v="Celeste">Celeste</button>
+          <button type="button" data-v="Gris">Gris</button>
+          <button type="button" data-v="Plateado">Plata</button>
+          <button type="button" data-v="Dorado">Dorado</button>
+          <button type="button" data-v="Verde">Verde</button>
+          <button type="button" data-v="Rojo">Rojo</button>
+          <button type="button" data-v="Morado">Morado</button>
+          <button type="button" class="other" data-other>Otro…</button>
+        </div>
+        <input class="other-input" data-other-for="color" hidden placeholder="Especificar color"></label>
+      <label class="field full"><span>Estado (RENTESEG)</span>
+        <div class="chips" data-chip="estado_dispositivo">
+          <button type="button" data-v="ROBADO">Robado</button>
+          <button type="button" data-v="HURTADO">Hurtado</button>
+          <button type="button" data-v="SUSTRAÍDO">Sustraído</button>
+          <button type="button" data-v="NORMAL">Normal</button>
+          <button type="button" data-v="NO REGISTRADO">No registrado</button>
+          <button type="button" class="other" data-other>Otro…</button>
+        </div>
+        <input class="other-input" data-other-for="estado_dispositivo" hidden placeholder="Especificar estado"></label>
+      <label class="field full"><span>Empresa operadora</span>
+        <div class="chips" data-chip="operadora">
+          <button type="button" data-v="Claro">Claro</button>
+          <button type="button" data-v="AMÉRICA MÓVIL PERÚ S.A.C.">América Móvil Perú S.A.C.</button>
+          <button type="button" data-v="Movistar">Movistar</button>
+          <button type="button" data-v="TELEFÓNICA DEL PERÚ S.A.A.">Telefónica del Perú S.A.A.</button>
+          <button type="button" data-v="Entel">Entel</button>
+          <button type="button" data-v="ENTEL PERÚ S.A.">Entel Perú S.A.</button>
+          <button type="button" data-v="Bitel">Bitel</button>
+          <button type="button" data-v="VIETTEL PERÚ S.A.C.">Viettel Perú S.A.C.</button>
+          <button type="button" class="other" data-other>Otra…</button>
+        </div>
+        <p class="hint">Toca lo que muestre el reporte de OSIPTEL: la marca o su razón social.</p>
+        <input class="other-input" data-other-for="operadora" hidden placeholder="Especificar operadora"></label>
+      <label class="field"><span>Chip / SIM</span>
+        <div class="seg" data-seg="chip"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
+      <label class="field"><span>Equipo</span>
+        <div class="seg" data-seg="estado_equipo"><button type="button" data-v="ENCENDIDO">Encendido</button><button type="button" data-v="APAGADO">Apagado</button></div></label>
     </div>
-  </details>
+  </section>
 
-  <!-- CASO: OPCIONAL -->
-  <details class="sec" id="secOpc">
-    <summary><span class="secnum opt">+</span> Datos adicionales <span class="meta"><span class="tag">Opcional</span><span class="chev">▾</span></span></summary>
-    <div class="secbody">
-      <p class="hint" style="margin-top:10px">Solo si los tienes a la mano. Lo vacío queda como línea en blanco en el acta.</p>
-      <div class="grid">
-        <div class="subhead">Datos personales del intervenido</div>
-        <label class="field"><span>Natural de</span><input data-k="natural"></label>
-        <label class="field full"><span>Estado civil</span>
-          <div class="chips" data-chip="estado_civil">
-            <button type="button" data-v="Soltero(a)">Soltero(a)</button>
-            <button type="button" data-v="Casado(a)">Casado(a)</button>
-            <button type="button" data-v="Conviviente">Conviviente</button>
-            <button type="button" data-v="Divorciado(a)">Divorciado(a)</button>
-            <button type="button" data-v="Viudo(a)">Viudo(a)</button>
-            <button type="button" class="other" data-other>Otro…</button>
-          </div>
-          <input class="other-input" data-other-for="estado_civil" hidden placeholder="Especificar"></label>
-        <label class="field"><span>Fecha de nacimiento</span><input data-k="nacimiento"></label>
-        <label class="field full"><span>Grado de instrucción</span>
-          <div class="chips" data-chip="instruccion">
-            <button type="button" data-v="Sin instrucción">Sin instrucción</button>
-            <button type="button" data-v="Primaria">Primaria</button>
-            <button type="button" data-v="Secundaria">Secundaria</button>
-            <button type="button" data-v="Técnica">Técnica</button>
-            <button type="button" data-v="Superior">Superior</button>
-            <button type="button" class="other" data-other>Otro…</button>
-          </div>
-          <input class="other-input" data-other-for="instruccion" hidden placeholder="Especificar"></label>
-        <label class="field"><span>Padre (Don)</span><input data-k="padre"></label>
-        <label class="field"><span>Madre (Doña)</span><input data-k="madre"></label>
-        <label class="field"><span>Profesión / ocupación</span><input data-k="ocupacion"></label>
-        <label class="field"><span>Celular</span><input data-k="celular" inputmode="tel"></label>
-        <label class="field full"><span>Correo electrónico</span><input data-k="correo" inputmode="email"></label>
-        <label class="field full"><span>Domicilio</span><input data-k="domicilio"></label>
+  <!-- PASO: EXTRAS -->
+  <section class="step" data-step="extras">
+    <div class="stephead"><h2>Datos adicionales <span class="opt-pill">Opcional</span></h2><p>Puedes <b>saltar este paso</b>. Lo que dejes vacío sale como línea en blanco para llenar a mano.</p></div>
+    <div class="grid">
+      <div class="subhead">Datos personales del intervenido</div>
+      <label class="field"><span>Natural de</span><input data-k="natural"></label>
+      <label class="field full"><span>Estado civil</span>
+        <div class="chips" data-chip="estado_civil">
+          <button type="button" data-v="Soltero(a)">Soltero(a)</button>
+          <button type="button" data-v="Casado(a)">Casado(a)</button>
+          <button type="button" data-v="Conviviente">Conviviente</button>
+          <button type="button" data-v="Divorciado(a)">Divorciado(a)</button>
+          <button type="button" data-v="Viudo(a)">Viudo(a)</button>
+          <button type="button" class="other" data-other>Otro…</button>
+        </div>
+        <input class="other-input" data-other-for="estado_civil" hidden placeholder="Especificar"></label>
+      <label class="field"><span>Fecha de nacimiento</span><input data-k="nacimiento"></label>
+      <label class="field full"><span>Grado de instrucción</span>
+        <div class="chips" data-chip="instruccion">
+          <button type="button" data-v="Sin instrucción">Sin instrucción</button>
+          <button type="button" data-v="Primaria">Primaria</button>
+          <button type="button" data-v="Secundaria">Secundaria</button>
+          <button type="button" data-v="Técnica">Técnica</button>
+          <button type="button" data-v="Superior">Superior</button>
+          <button type="button" class="other" data-other>Otro…</button>
+        </div>
+        <input class="other-input" data-other-for="instruccion" hidden placeholder="Especificar"></label>
+      <label class="field"><span>Padre (Don)</span><input data-k="padre"></label>
+      <label class="field"><span>Madre (Doña)</span><input data-k="madre"></label>
+      <label class="field"><span>Profesión / ocupación</span><input data-k="ocupacion"></label>
+      <label class="field"><span>Celular</span><input data-k="celular" inputmode="tel"></label>
+      <label class="field full"><span>Correo electrónico</span><input data-k="correo" inputmode="email"></label>
+      <label class="field full"><span>Domicilio</span><input data-k="domicilio"></label>
 
-        <div class="subhead">Equipo / verificación</div>
-        <label class="field"><span>IMEI N° (1 ó 2)</span><input data-k="imei_slot" placeholder="1"></label>
-        <label class="field"><span>N° telefónico del equipo</span><input data-k="num_telefonico" inputmode="tel"></label>
-        <label class="field"><span>Reportado como</span><input data-k="reportado_como" placeholder="(igual que estado)"></label>
-        <label class="field"><span>Fecha consulta OSIPTEL</span><input data-k="fecha_consulta" placeholder="(igual que fecha)"></label>
+      <div class="subhead">Equipo / verificación</div>
+      <label class="field"><span>N° telefónico del equipo</span><input data-k="num_telefonico" inputmode="tel"></label>
+      <label class="field"><span>Reportado como</span><input data-k="reportado_como" placeholder="(igual que estado)"></label>
+      <label class="field full"><span>Fecha de reporte a OSIPTEL</span><input data-k="fecha_consulta" placeholder="Fecha en que se reportó el equipo"></label>
 
-        <div class="subhead">Cadena de custodia (A-6)</div>
-        <label class="field full"><span>Descripción del lacrado / rotulado</span><textarea data-k="lacrado_desc"></textarea></label>
-        <label class="field"><span>N° de Hallazgo</span><input data-k="num_hallazgo"></label>
-        <label class="field"><span>Tipo de embalaje</span><input data-k="tipo_embalaje" placeholder="Mica transparente"></label>
+      <div class="subhead">Cadena de custodia (A-6)</div>
+      <label class="field full"><span>Descripción del lacrado / rotulado</span><textarea data-k="lacrado_desc"></textarea></label>
+      <label class="field"><span>N° de Hallazgo</span><input data-k="num_hallazgo"></label>
+      <label class="field"><span>Tipo de embalaje</span><input data-k="tipo_embalaje" placeholder="Mica transparente"></label>
 
-        <div class="subhead">Lectura de derechos</div>
-        <label class="field"><span>Comunicar detención a</span><input data-k="comunicar_a"></label>
-        <label class="field full"><span>Parentesco</span>
-          <div class="chips" data-chip="parentesco">
-            <button type="button" data-v="Padre">Padre</button>
-            <button type="button" data-v="Madre">Madre</button>
-            <button type="button" data-v="Hermano(a)">Hermano(a)</button>
-            <button type="button" data-v="Esposo(a)">Esposo(a)</button>
-            <button type="button" data-v="Conviviente">Conviviente</button>
-            <button type="button" data-v="Hijo(a)">Hijo(a)</button>
-            <button type="button" data-v="Amigo(a)">Amigo(a)</button>
-            <button type="button" class="other" data-other>Otro…</button>
-          </div>
-          <input class="other-input" data-other-for="parentesco" hidden placeholder="Especificar"></label>
-        <label class="field"><span>Teléfono contacto</span><input data-k="comunicar_telefono" inputmode="tel"></label>
-        <label class="field full"><span>Intérprete (idioma)</span>
-          <div class="chips" data-chip="interprete_idioma">
-            <button type="button" data-v="No requiere">No requiere</button>
-            <button type="button" data-v="Quechua">Quechua</button>
-            <button type="button" data-v="Aimara">Aimara</button>
-            <button type="button" class="other" data-other>Otro…</button>
-          </div>
-          <input class="other-input" data-other-for="interprete_idioma" hidden placeholder="Especificar idioma"></label>
-        <label class="field"><span>¿Abogado defensor?</span>
-          <div class="seg" data-seg="abogado_defensor"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
-        <label class="field"><span>Tel. abogado</span><input data-k="abogado_telefono" inputmode="tel"></label>
-        <label class="field"><span>¿Abogado de oficio?</span>
-          <div class="seg" data-seg="abogado_oficio"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
-        <label class="field"><span>¿Examen médico?</span>
-          <div class="seg" data-seg="medico"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
+      <div class="subhead">Lectura de derechos</div>
+      <label class="field"><span>Comunicar detención a</span><input data-k="comunicar_a"></label>
+      <label class="field full"><span>Parentesco</span>
+        <div class="chips" data-chip="parentesco">
+          <button type="button" data-v="Padre">Padre</button>
+          <button type="button" data-v="Madre">Madre</button>
+          <button type="button" data-v="Hermano(a)">Hermano(a)</button>
+          <button type="button" data-v="Esposo(a)">Esposo(a)</button>
+          <button type="button" data-v="Conviviente">Conviviente</button>
+          <button type="button" data-v="Hijo(a)">Hijo(a)</button>
+          <button type="button" data-v="Amigo(a)">Amigo(a)</button>
+          <button type="button" class="other" data-other>Otro…</button>
+        </div>
+        <input class="other-input" data-other-for="parentesco" hidden placeholder="Especificar"></label>
+      <label class="field"><span>Teléfono contacto</span><input data-k="comunicar_telefono" inputmode="tel"></label>
+      <label class="field full"><span>Intérprete (idioma)</span>
+        <div class="chips" data-chip="interprete_idioma">
+          <button type="button" data-v="No requiere">No requiere</button>
+          <button type="button" data-v="Quechua">Quechua</button>
+          <button type="button" data-v="Aimara">Aimara</button>
+          <button type="button" class="other" data-other>Otro…</button>
+        </div>
+        <input class="other-input" data-other-for="interprete_idioma" hidden placeholder="Especificar idioma"></label>
+      <label class="field"><span>¿Abogado defensor?</span>
+        <div class="seg" data-seg="abogado_defensor"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
+      <label class="field"><span>Tel. abogado</span><input data-k="abogado_telefono" inputmode="tel"></label>
+      <label class="field"><span>¿Abogado de oficio?</span>
+        <div class="seg" data-seg="abogado_oficio"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
+      <label class="field"><span>¿Examen médico?</span>
+        <div class="seg" data-seg="medico"><button type="button" data-v="SI">Sí</button><button type="button" data-v="NO">No</button></div></label>
 
-        <div class="subhead">Ministerio Público / registro</div>
-        <label class="field full"><span>Representante del M.P. (RMP)</span><input data-k="rmp"></label>
-        <label class="field"><span>Vía / medio</span><input data-k="rmp_via" placeholder="vía telefónica"></label>
-        <label class="field"><span>Teléfono RMP</span><input data-k="rmp_telefono" inputmode="tel"></label>
-        <label class="field full"><span>Testigos / presentes (registro)</span><input data-k="rp_presentes"></label>
-      </div>
+      <div class="subhead">Ministerio Público / registro</div>
+      <label class="field full"><span>Representante del M.P. (RMP)</span><input data-k="rmp"></label>
+      <label class="field"><span>Vía / medio</span><input data-k="rmp_via" placeholder="vía telefónica"></label>
+      <label class="field"><span>Teléfono RMP</span><input data-k="rmp_telefono" inputmode="tel"></label>
+      <label class="field full"><span>Testigos / presentes (registro)</span><input data-k="rp_presentes"></label>
     </div>
-  </details>
+  </section>
 
-  <!-- ACTAS -->
-  <details class="sec" open>
-    <summary><span class="secnum">2</span> Actas a generar <span class="meta"><span class="chev">▾</span></span></summary>
-    <div class="secbody"><div class="actas-pick" id="actasPick"></div></div>
-  </details>
+  <!-- PASO: GENERAR -->
+  <section class="step" data-step="generar">
+    <div class="stephead"><h2>Generar actas</h2><p>Revisa el resumen y genera. Lo que falte saldrá en blanco para llenar a mano.</p></div>
+    <div class="resumen" id="resumen"></div>
+    <div class="subhead" style="margin:16px 0 0">Actas a generar</div>
+    <div class="actas-pick" id="actasPick"></div>
+  </section>
 
 </main>
 
 <div class="fab">
   <div class="wrap">
-    <button class="btn primary" onclick="generate()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
-      Generar actas
-    </button>
+    <button class="btn ghost" id="btnPrev" onclick="prevStep()">‹ Atrás</button>
+    <button class="btn primary" id="btnNext" onclick="nextStep()">Siguiente →</button>
   </div>
 </div>
+
 
 <section id="viewer">
   <div class="docbar">
@@ -404,6 +435,41 @@ const segs=['sexo','chip','estado_equipo','abogado_defensor','abogado_oficio','m
 const profileKeys=[];
 
 const ESSENTIAL=['nombre','dni','sexo','lugar','marca','modelo','color','imei_num','estado_dispositivo','operadora'];
+
+const STEPS=[
+  {id:'perfil',label:'Perfil'},
+  {id:'intervenido',label:'Intervenido'},
+  {id:'equipo',label:'Equipo'},
+  {id:'extras',label:'Extras'},
+  {id:'generar',label:'Generar'},
+];
+let curStep=0;
+function buildStepper(){
+  document.getElementById('stepper').innerHTML=STEPS.map((s,i)=>`<button type="button" onclick="goStep(${i})"><span class="n">${i+1}</span>${s.label}</button>`).join('');
+}
+function showStep(i){
+  curStep=Math.max(0,Math.min(i,STEPS.length-1));
+  const id=STEPS[curStep].id;
+  document.querySelectorAll('.step').forEach(el=>el.classList.toggle('show',el.dataset.step===id));
+  document.querySelectorAll('#stepper button').forEach((b,idx)=>{b.classList.toggle('active',idx===curStep);b.classList.toggle('done',idx<curStep);});
+  const last=id==='generar';
+  document.getElementById('btnNext').innerHTML=last?'📄 Generar actas':'Siguiente →';
+  document.getElementById('btnPrev').style.visibility=curStep===0?'hidden':'visible';
+  if(last) buildResumen();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goStep(i){showStep(i);}
+function nextStep(){ if(STEPS[curStep].id==='generar'){generate();return;} showStep(curStep+1); }
+function prevStep(){ showStep(curStep-1); }
+function buildResumen(){
+  const eq=[data.marca,data.modelo].filter(Boolean).join(' ')||'—';
+  document.getElementById('resumen').innerHTML=
+    `<div><b>Intervenido:</b> ${data.nombre||'—'} ${data.sexo||''}</div>`+
+    `<div><b>DNI:</b> ${data.dni||'—'}</div>`+
+    `<div><b>Equipo:</b> ${eq}</div>`+
+    `<div><b>IMEI ${data.imei_slot||'1'}:</b> ${data.imei_num||'—'} ${data.imei_tipo?('('+data.imei_tipo+')'):''}</div>`+
+    `<div><b>Estado:</b> ${data.estado_dispositivo||'—'} · <b>Operadora:</b> ${data.operadora||'—'}</div>`;
+}
 
 const ACTAS=[
   {id:'intervencion',name:'Acta de Intervención Policial',on:true},
@@ -453,11 +519,16 @@ function init(){
     }));
     if(otherInput) otherInput.addEventListener('input',()=>{data[key]=otherInput.value;updateProgress();persist();});
   });
+  loadProfile();
   loadCase();
   autoDateTime();
   applyToForm();
+  buildStepper();
   refreshPerfilTag();
   updateProgress();
+  const configured=!!(data.instructor&&data.comisaria);
+  setProfileLocked(configured);
+  showStep(configured?1:0);
 }
 
 /* ---------- FECHA / HORA AUTO ---------- */
@@ -468,6 +539,7 @@ function autoDateTime(){
   const hhmm=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
   if(!data.hora_inicio) data.hora_inicio=hhmm;
   if(!data.hora_aprox) data.hora_aprox=hhmm;
+  if(!data.imei_slot) data.imei_slot='1';
 }
 
 /* ---------- PERSISTENCIA ---------- */
@@ -497,11 +569,23 @@ function applyToForm(){
 }
 function refreshPerfilTag(){
   const ok=data.instructor&&data.comisaria;
-  const t=document.getElementById('perfilTag');
-  if(ok){t.textContent='✓ '+(data.instructor.split(' ').slice(0,2).join(' '));t.classList.add('ok');document.getElementById('secPerfil').open=false;}
-  else{t.textContent='Configurar';t.classList.remove('ok');document.getElementById('secPerfil').open=true;}
+  const b=document.querySelector('#stepper button');
+  if(b) b.classList.toggle('done',!!ok);
 }
-function saveProfile(){persist();refreshPerfilTag();toast('Perfil guardado ✓');document.getElementById('secPerfil').open=false;window.scrollTo({top:0,behavior:'smooth'});}
+let profileLocked=false;
+function setProfileLocked(locked){
+  profileLocked=locked;
+  document.querySelectorAll('[data-profile]').forEach(el=>{el.disabled=locked;});
+  const e=document.getElementById('btnEditProfile'),s=document.getElementById('btnSaveProfile'),bd=document.getElementById('lockBadge');
+  if(e) e.style.display=locked?'':'none';
+  if(s) s.style.display=locked?'none':'';
+  if(bd) bd.style.display=locked?'':'none';
+}
+function editProfile(){ setProfileLocked(false); toast('Perfil desbloqueado para editar'); }
+function saveProfile(){
+  if(!data.instructor||!data.comisaria){toast('Falta al menos Instructor y Comisaría');return;}
+  persist();refreshPerfilTag();setProfileLocked(true);toast('Perfil guardado y bloqueado ✓');showStep(1);
+}
 
 function exportDraft(){
   const blob=new Blob([JSON.stringify({data,actas:ACTAS.map(a=>({id:a.id,on:a.on}))},null,2)],{type:'application/json'});
@@ -518,7 +602,7 @@ function newCase(){
   document.querySelectorAll('[data-seg] button').forEach(b=>b.classList.remove('on'));
   try{localStorage.removeItem(CKEY);}catch(e){}
   autoDateTime();applyToForm();updateProgress();
-  toast('Caso nuevo listo');window.scrollTo({top:0,behavior:'smooth'});
+  toast('Caso nuevo listo');showStep(1);
 }
 
 /* ---------- PROGRESO (solo esenciales) ---------- */
@@ -534,7 +618,6 @@ function gv(key){
   let v=(data[key]||'').toString().trim();
   if(v)return v;
   if(key==='reportado_como')return (data.estado_dispositivo||'').trim();
-  if(key==='fecha_consulta')return (data.fecha||'').trim();
   if(key==='fecha_embalaje')return (data.fecha||'').trim();
   if(key==='imei_slot')return '1';
   return '';
@@ -547,7 +630,7 @@ function sexo(){return data.sexo||'(&nbsp;&nbsp;)';}
 /* ---------- PLANTILLAS ---------- */
 function tpl_intervencion(){return `<div class="sheet">
   <h3>Acta de Intervención Policial N°</h3>
-  <p>--- En el distrito de ${f('distrito')} provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, ubicados en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, en compañía de ${f('efectivo2',170)} identificado con CIP Nro. ${f('efectivo2_cip')}, ambos pertenecientes a la ${f('unidad',170)}; dan cuenta que en circunstancias que nos encontrábamos realizando actuaciones propias de nuestra función policial y a mérito del desarrollo del <b>OPERATIVO POLICIAL "</b>${f('operativo')}<b>"</b>; bajo el mando de ${f('jefe',190)}, se intervino en ${f('lugar',210)}, a horas ${f('hora_aprox',70)} aprox., a la persona de ${f('nombre',210)} ${sexo()}, natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, hijo de Don ${f('padre')} y Doña ${f('madre')}, con grado de instrucción ${f('instruccion')}, de profesión y/o ocupación ${f('ocupacion')}, identificado con DNI Nro. ${f('dni')} con teléfono celular Nro. ${f('celular')}, correo electrónico ${f('correo',170)} y domiciliado actualmente en ${f('domicilio',230)}; a quien se le solicitó cordialmente pueda proporcionar el Nro. de IMEI de su equipo móvil, accediendo y de forma <b>VOLUNTARIA</b> proporcionó un código de quince dígitos, verificando así que el IMEI ${f('imei_slot',40)} presenta la siguiente numeración: ${f('imei_num',180)}, el mismo que al ser ingresado y consultado en el Registro Nacional de Equipos Terminales Móviles para la Seguridad - RENTESEG a través de la plataforma virtual de OSIPTEL, informó lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}. Asimismo, se hace mención que el equipo móvil tiene las siguientes características: Marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')} con número telefónico: ${f('num_telefonico')}.</p>
+  <p>--- En el distrito de ${f('distrito')} provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, ubicados en una de las Oficinas de la Comisaría PNP ${f('comisaria')}, el Instructor ${f('instructor',200)} identificado con CIP Nro. ${f('instructor_cip')}, en compañía de ${f('efectivo2',170)} identificado con CIP Nro. ${f('efectivo2_cip')}, ambos pertenecientes a la ${f('unidad',170)}; dan cuenta que en circunstancias que nos encontrábamos realizando actuaciones propias de nuestra función policial y a mérito del desarrollo del <b>OPERATIVO POLICIAL "</b>${f('operativo')}<b>"</b>; bajo el mando de ${f('jefe',190)}, se intervino en ${f('lugar',210)}, a horas ${f('hora_aprox',70)} aprox., a la persona de ${f('nombre',210)} ${sexo()}, natural de ${f('natural')}, estado civil ${f('estado_civil')}, nacido el ${f('nacimiento')}, hijo de Don ${f('padre')} y Doña ${f('madre')}, con grado de instrucción ${f('instruccion')}, de profesión y/o ocupación ${f('ocupacion')}, identificado con DNI Nro. ${f('dni')} con teléfono celular Nro. ${f('celular')}, correo electrónico ${f('correo',170)} y domiciliado actualmente en ${f('domicilio',230)}; a quien se le solicitó cordialmente pueda proporcionar el Nro. de IMEI de su equipo móvil, accediendo y de forma <b>VOLUNTARIA</b> proporcionó un código de quince dígitos, verificando así que el IMEI ${f('imei_slot',40)} (${f('imei_tipo',70)}) presenta la siguiente numeración: ${f('imei_num',180)}, el mismo que al ser ingresado y consultado en el Registro Nacional de Equipos Terminales Móviles para la Seguridad - RENTESEG a través de la plataforma virtual de OSIPTEL, informó lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}. Asimismo, se hace mención que el equipo móvil tiene las siguientes características: Marca: ${f('marca')}, modelo: ${f('modelo')}, color: ${f('color')} con número telefónico: ${f('num_telefonico')}.</p>
   <p>Ante lo expuesto, se le procede a informar el motivo de su <b>DETENCIÓN</b>; por encontrarse inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>, en agravio de Persona en Proceso de Identificación; haciéndole saber de ello y los derechos que le asisten en su calidad de <b>DETENIDO</b>, los mismos que se encuentran contenidos en el Artículo 71° del Código Procesal Penal vigente. En ese sentido, la persona antes señalada fue trasladada a la Comisaría PNP ${f('comisaria')}, con el fin de realizar las diligencias correspondientes. Se pone a disposición de la Comisaría PNP ${f('comisaria')}, en calidad de <b>DETENIDO</b> a la persona de ${f('nombre',210)} ${sexo()} identificado con DNI Nro. ${f('dni')}, adjuntando al presente un (01) Acta de Consentimiento para Verificación de Número de IMEI, un (01) Acta de Entrega, Recepción, Incautación y Lacrado de equipo móvil, una (01) Impresión del reporte de OSIPTEL, un (01) Acta de Detención, un (01) Acta de Lectura de Derechos, una (01) Constancia de Buen Trato, un (01) Acta de Registro Personal, y una (01) mica transparente debidamente lacrada y rotulada, conteniendo la evidencia, con su respectivo formato A-6 y A-7 del procedimiento de la Cadena de Custodia.</p>
   <p>Finalmente, de todo lo indicado se puso en conocimiento del RMP ${f('rmp',210)} ${f('rmp_via',110)}, al número telefónico ${f('rmp_telefono')}.</p>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')}, se da por concluida la presente diligencia y una vez leída por los participantes se procede a firmar en señal de conformidad. ---</p>
@@ -556,7 +639,7 @@ function tpl_intervencion(){return `<div class="sheet">
 function tpl_consentimiento(){return `<div class="sheet">
   <h3>Acta de Consentimiento para Verificación de Número de IMEI de Equipo Móvil-Celular</h3>
   <p>--- En el distrito de ${f('distrito')}, provincia de ${f('provincia')}, siendo las ${f('hora_inicio',70)} horas del ${f('fecha')}, presente el instructor, se intervino en ${f('lugar',230)} a la persona identificada como ${f('nombre',210)} ${sexo()} con DNI Nro. ${f('dni')}, domiciliado en ${f('domicilio',210)}, quien da su <b>CONSENTIMIENTO VOLUNTARIO</b> para la verificación del número de IMEI de su equipo celular de Marca: ${f('marca')}, Modelo: ${f('modelo')} de color ${f('color')} en la plataforma virtual del <b>REGESENT</b> de <b>OSIPTEL</b>. Se procedió a realizar la verificación del IMEI del equipo móvil-celular, conforme al detalle siguiente: ---</p>
-  <p><b>PRIMERO:</b> La persona antes indicada de forma voluntaria procedió a digitar el código <b>*#06#</b> en su equipo celular proporcionando un código de IMEI de quince dígitos; al verificar el IMEI ${f('imei_slot',40)} con número ${f('imei_num',180)}, dichos datos fueron ingresados a la plataforma virtual de <b>OSIPTEL</b>, obteniendo como resultado lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}.</p>
+  <p><b>PRIMERO:</b> La persona antes indicada de forma voluntaria procedió a digitar el código <b>*#06#</b> en su equipo celular proporcionando un código de IMEI de quince dígitos; al verificar el IMEI ${f('imei_slot',40)} (${f('imei_tipo',70)}) con número ${f('imei_num',180)}, dichos datos fueron ingresados a la plataforma virtual de <b>OSIPTEL</b>, obteniendo como resultado lo siguiente: <b>ESTADO DEL DISPOSITIVO</b>: ${f('estado_dispositivo')}, <b>EMPRESA OPERADORA</b> ${f('operadora')}, <b>FECHA</b>: ${f('fecha_consulta')}.</p>
   <p><b>SEGUNDO:</b> Asimismo se le hizo de conocimiento que el IMEI de su equipo celular se encuentra reportado como ${f('reportado_como')}, por lo que se encontraría inmerso en el presunto Delito Contra el Patrimonio en la modalidad de <b>RECEPTACIÓN</b>.</p>
   <p>--- Siendo las ${f('hora_fin',70)} horas del ${f('fecha')} se da por concluida la presente, firmando los participantes en señal de conformidad. ---</p>
   ${signBlock('EL INSTRUCTOR PNP','INTERVENIDO')}</div>`;}
