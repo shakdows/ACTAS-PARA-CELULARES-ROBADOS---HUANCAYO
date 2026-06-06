@@ -167,10 +167,29 @@
     header.app,.toolbar,.fab,.docbar,main,.toast{display:none !important}
     body{background:#fff}#viewer{display:block !important}
     .docscroll{padding:0;background:#fff}
-    .sheet{box-shadow:none;margin:0;max-width:none;width:100%;padding:0;page-break-after:always;font-size:12pt}
+    .sheet{box-shadow:none;margin:0;max-width:none;width:100%;padding:0;page-break-after:always;page-break-inside:avoid;font-size:10.3pt;line-height:1.28}
     .sheet:last-child{page-break-after:auto}
+    .sheet h3{font-size:12pt;margin:0 0 8px}
+    .sheet p{margin:0 0 5px}
+    .sheet ul{margin:4px 0 5px;padding-left:20px}
+    .sheet ul li{margin-bottom:2px}
+    .sheet .rights{font-size:9pt;margin:5px 0 8px}
+    .sheet .rights td{padding:2.5px 6px}
+    .sheet .sign{margin-top:20px}
+    .sheet .sign .ln{margin-top:26px}
     @page{size:A4;margin:30.5mm 20mm 20mm 30mm}
   }
+
+  #docs.pdfmode{background:#fff}
+  #docs.pdfmode .sheet{box-shadow:none;margin:0 auto;padding:0;max-width:none;font-size:17px;line-height:1.28}
+  #docs.pdfmode .sheet h3{font-size:20px;margin:0 0 12px}
+  #docs.pdfmode .sheet p{margin:0 0 8px}
+  #docs.pdfmode .sheet ul{margin:5px 0 8px}
+  #docs.pdfmode .sheet ul li{margin-bottom:3px}
+  #docs.pdfmode .sheet .rights{font-size:15px;margin:7px 0 11px}
+  #docs.pdfmode .sheet .rights td{padding:4px 7px}
+  #docs.pdfmode .sheet .sign{margin-top:32px}
+  #docs.pdfmode .sheet .sign .ln{margin-top:42px}
 </style>
 </head>
 <body>
@@ -805,15 +824,18 @@ function backToForm(){document.getElementById('viewer').classList.remove('show')
 async function sharePDF(){
   if(!window.html2pdf){return loadH2P(sharePDF);}
   toast('Generando PDF…');
+  const el=document.getElementById('docs');
   const opt={margin:[30.5,30,20,20],filename:fileName()+'.pdf',image:{type:'jpeg',quality:.95},
-    html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy'],before:'.sheet'}};
+    html2canvas:{scale:2,useCORS:true,windowWidth:820},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy'],before:'.sheet'}};
+  el.classList.add('pdfmode');
   try{
-    const blob=await html2pdf().set(opt).from(document.getElementById('docs')).output('blob');
+    const blob=await html2pdf().set(opt).from(el).output('blob');
     const file=new File([blob],opt.filename,{type:'application/pdf'});
     if(navigator.canShare&&navigator.canShare({files:[file]})){
       await navigator.share({files:[file],title:'Actas PNP',text:'Actas de receptación – '+(data.nombre||'')});
     }else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=opt.filename;a.click();toast('PDF descargado · adjúntalo en WhatsApp');}
   }catch(e){toast('Usa "Imprimir / PDF" si falla');}
+  finally{el.classList.remove('pdfmode');}
 }
 function shareWhatsAppText(){
   const t=`*ACTAS PNP – RECEPTACIÓN*\nDetenido: ${data.nombre||'—'}\nDNI: ${data.dni||'—'}\nEquipo: ${data.marca||''} ${data.modelo||''}\nIMEI: ${data.imei_num||'—'}\nEstado RENTESEG: ${data.estado_dispositivo||'—'}\nFecha: ${data.fecha||'—'}\n\n(Adjuntar el PDF de las actas para impresión y firma)`;
