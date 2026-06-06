@@ -898,10 +898,13 @@ async function sharePDF(){
     }
     const blob=pdf.output('blob');
     const fn=fileName()+'.pdf';
+    const dl=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;document.body.appendChild(a);a.click();a.remove();toast('PDF descargado ✓ · adjúntalo en WhatsApp/Gmail');};
+    const isMobile=(navigator.maxTouchPoints>0)||(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
     const file=new File([blob],fn,{type:'application/pdf'});
-    if(navigator.canShare&&navigator.canShare({files:[file]})){
-      await navigator.share({files:[file],title:'Actas PNP',text:'Actas de receptación – '+(data.nombre||'')});
-    }else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;a.click();toast('PDF descargado · adjúntalo en WhatsApp');}
+    if(isMobile && navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file],title:'Actas PNP'}); }
+      catch(err){ if(!err||err.name!=='AbortError') dl(); }
+    }else{ dl(); }
   }catch(e){toast('No se pudo generar; usa "Imprimir"');}
   finally{holder.remove();}
 }
@@ -909,7 +912,7 @@ function shareWhatsAppText(){
   const t=`*ACTAS PNP – RECEPTACIÓN*\nDetenido: ${data.nombre||'—'}\nDNI: ${data.dni||'—'}\nEquipo: ${data.marca||''} ${data.modelo||''}\nIMEI: ${data.imei_num||'—'}\nEstado RENTESEG: ${data.estado_dispositivo||'—'}\nFecha: ${data.fecha||'—'}\n\n(Adjuntar el PDF de las actas para impresión y firma)`;
   window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');
 }
-function fileName(){return 'ACTAS_'+(data.dni||'SN').replace(/\s/g,'')+'_'+((data.nombre||'').split(' ')[0]||'');}
+function fileName(){const dni=(data.dni||'SN').replace(/[^0-9A-Za-z]/g,'');const nom=((data.nombre||'').split(/[\s,]+/)[0]||'').replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñ]/g,'');return 'ACTAS_'+dni+(nom?'_'+nom:'');}
 function loadH2P(cb){toast('Cargando módulo PDF…');const s=document.createElement('script');
   s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js';
   s.onload=()=>cb();s.onerror=()=>toast('Sin conexión: usa "Imprimir / PDF"');document.head.appendChild(s);}
