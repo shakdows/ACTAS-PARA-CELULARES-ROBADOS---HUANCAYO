@@ -134,6 +134,19 @@
   .resumen b{color:var(--pnp-green)}
   #btnPrev{flex:0 0 auto}
   .hora-evid{margin-top:10px;background:#fbeec9;border:1px solid #e7cf86;border-radius:9px;padding:8px 11px;font-size:12px;color:#5b4a16;line-height:1.4}
+  .sigimg{display:block;max-height:54px;max-width:88%;margin:0 auto -8px;object-fit:contain}
+  .sign-modal{position:fixed;inset:0;background:rgba(8,30,20,.55);z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:0}
+  .sign-modal:not([hidden]){animation:fade .2s ease}
+  .sign-card{background:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+  @media(min-width:560px){.sign-card{border-radius:16px;margin-bottom:24px}}
+  .sign-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:16px;color:var(--pnp-green)}
+  .sign-x{border:none;background:#eef1ef;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+  .sign-pad-wrap{margin-bottom:12px}
+  .sign-label{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:5px}
+  .sign-clear{border:1px solid var(--line);background:#fff;border-radius:8px;padding:3px 10px;font-size:11.5px;color:var(--danger);cursor:pointer}
+  .sign-pad{width:100%;height:160px;border:2px dashed #b9c7bf;border-radius:12px;background:#fcfdfc;touch-action:none;display:block}
+  .sign-actions{display:flex;gap:10px}
+  .sign-actions .btn{flex:1;justify-content:center;padding:13px}
 
   #viewer{display:none}#viewer.show{display:block}
   body.viewing header.app,body.viewing .toolbar,body.viewing #form,body.viewing .fab{display:none !important}
@@ -179,7 +192,7 @@
     .sheet .rights td{padding:2.5px 6px}
     .sheet .sign{margin-top:20px}
     .sheet .sign .ln{margin-top:26px}
-    @page{size:A4;margin:30.5mm 20mm 20mm 30mm}
+    @page{size:A4;margin:18mm 20mm 16mm 30mm}
   }
 
   .pdfmode{background:#fff}
@@ -437,13 +450,33 @@
   <div class="docbar">
     <button class="btn" onclick="backToForm()">‹ Editar</button>
     <h2>Actas</h2>
+    <button class="btn" onclick="openSign()">✍️ Firmar</button>
     <button class="btn primary" onclick="sharePDF()">⬇ PDF limpio</button>
     <button class="btn" onclick="window.print()">🖨 Imprimir</button>
     <button class="btn" onclick="shareWhatsAppText()">WhatsApp</button>
-    <div class="printnote">💡 El <b>PDF limpio</b> sale sin fecha ni URL. Si usas <b>Imprimir</b>, desactiva <b>“Encabezados y pies de página”</b> en el diálogo.</div>
+    <div class="printnote">💡 Toca <b>✍️ Firmar</b> para firmar en el celular. El <b>PDF limpio</b> sale sin fecha ni URL.</div>
   </div>
   <div class="docscroll" id="docs"></div>
 </section>
+
+<div id="signModal" class="sign-modal" hidden>
+  <div class="sign-card">
+    <div class="sign-head"><b>Firmar en el celular</b><button class="sign-x" onclick="closeSign()">✕</button></div>
+    <div class="sign-pad-wrap">
+      <div class="sign-label">Firma del EFECTIVO (Instructor) <button class="sign-clear" onclick="clearSig('I')">Borrar</button></div>
+      <canvas id="padI" class="sign-pad" width="600" height="170"></canvas>
+    </div>
+    <div class="sign-pad-wrap">
+      <div class="sign-label">Firma del INTERVENIDO / DETENIDO <button class="sign-clear" onclick="clearSig('D')">Borrar</button></div>
+      <canvas id="padD" class="sign-pad" width="600" height="170"></canvas>
+    </div>
+    <p class="hint" style="margin:4px 2px 10px">Dibuja con el dedo. Las firmas aparecerán sobre las líneas de todas las actas. Vuelve a tocar Firmar cuando cambie la persona.</p>
+    <div class="sign-actions">
+      <button class="btn" onclick="closeSign()">Cancelar</button>
+      <button class="btn primary" onclick="saveSign()">Guardar firmas</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -803,7 +836,7 @@ function tpl_derechos(){return `<div class="sheet">
 function tpl_buentrato(){return `<div class="sheet">
   <h3>Constancia de Buen Trato</h3>
   <p>El ciudadano <b>DETENIDO</b> que suscribe la presente, ${f('nombre',210)} ${sexo()} identificado con DNI Nro. ${f('dni')}, deja constancia de haber recibido buen trato físico y psicológico por parte del personal Policial interviniente, quienes realizaron el procedimiento de <b>DETENCIÓN</b>; y que su permanencia en esta Unidad Policial ha sido con dignidad y respeto irrestricto a los Derechos Humanos. Para mayor constancia firma e imprime su índice derecho en señal de conformidad.</p>
-  <div class="sign"><div class="col"><div class="ln">FIRMA / ÍNDICE DERECHO</div><div style="margin-top:6px">NOMBRES: ${f('nombre',190)}</div><div>D.N.I. ${f('dni')}</div></div></div></div>`;}
+  <div class="sign"><div class="col">${sigImg('intervenido')}<div class="ln">FIRMA / ÍNDICE DERECHO</div><div style="margin-top:6px">NOMBRES: ${f('nombre',190)}</div><div>D.N.I. ${f('dni')}</div></div></div></div>`;}
 
 function tpl_registro(){return `<div class="sheet">
   <h3>Acta de Registro Personal</h3>
@@ -829,7 +862,7 @@ function tpl_a6(){return `<div class="sheet">
   <p>Nombre Completo: ${f('instructor',230)}</p>
   <p>DNI / CIP N°: ${f('instructor_cip',170)} &nbsp; Cargo: ${f('servidor_cargo',150)}</p>
   <p>Fecha de Embalaje: ${f('fecha_embalaje',210)}</p>
-  <div class="sign"><div class="col"><div class="ln">FIRMA</div></div></div></div>`;}
+  <div class="sign"><div class="col">${sigImg('instructor')}<div class="ln">FIRMA</div></div></div></div>`;}
 function autoDesc(){
   if(data.lacrado_desc) return '<span class="fill">'+esc(data.lacrado_desc)+'</span>';
   if(data.marca||data.modelo||data.imei_num)
@@ -847,9 +880,10 @@ function rightsTable(){const R=[
   return '<table class="rights">'+R.map((t,i)=>`<tr><td class="n">${i+1}</td><td>${t}</td></tr>`).join('')+'</table>';}
 
 function evidNote(){return data.hora_editor?`<p style="font-size:9pt;font-style:italic;margin-top:12px;color:#444">(*) La fecha y/u hora del presente documento fue editada manualmente por <b>${esc(data.hora_editor)}</b> el ${esc(data.hora_editado_ts||'')}, bajo responsabilidad, como constancia y evidencia.</p>`:'';}
+function sigImg(which){const src=which==='instructor'?data.firma_instructor:data.firma_intervenido;return src?`<img class="sigimg" src="${src}" alt="firma">`:'';}
 function signBlock(left,right){return `<div class="sign">
-  <div class="col"><div class="ln">${left}</div></div>
-  <div class="col"><div class="ln">${right}</div>
+  <div class="col">${sigImg('instructor')}<div class="ln">${left}</div></div>
+  <div class="col">${sigImg('intervenido')}<div class="ln">${right}</div>
     <div style="margin-top:8px;font-weight:400;font-size:11px">APELLIDOS Y NOMBRES:</div>
     <div style="font-size:11px">${f('nombre',180)}</div>
     <div style="font-size:11px">DNI N°: ${f('dni',120)}</div>
@@ -857,7 +891,36 @@ function signBlock(left,right){return `<div class="sign">
 
 const RENDER={intervencion:tpl_intervencion,consentimiento:tpl_consentimiento,incautacion:tpl_incautacion,detencion:tpl_detencion,derechos:tpl_derechos,buentrato:tpl_buentrato,registro:tpl_registro,a6:tpl_a6};
 
-/* ---------- GENERAR ---------- */
+/* ---------- FIRMA EN PANTALLA ---------- */
+let padI=null,padD=null,padsReady=false;
+function makePad(canvas){
+  const ctx=canvas.getContext('2d');ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#0b2e1c';
+  let drawing=false,last=null,dirty=false;
+  const pos=e=>{const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};};
+  canvas.addEventListener('pointerdown',e=>{drawing=true;last=pos(e);canvas.setPointerCapture(e.pointerId);e.preventDefault();});
+  canvas.addEventListener('pointermove',e=>{if(!drawing)return;const p=pos(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;dirty=true;e.preventDefault();});
+  canvas.addEventListener('pointerup',()=>{drawing=false;});
+  canvas.addEventListener('pointerleave',()=>{drawing=false;});
+  return {
+    canvas,ctx,
+    clear(){ctx.clearRect(0,0,canvas.width,canvas.height);dirty=false;},
+    isDirty(){return dirty;},
+    load(src){this.clear();if(src){const img=new Image();img.onload=()=>ctx.drawImage(img,0,0,canvas.width,canvas.height);img.src=src;}},
+    dataURL(){return canvas.toDataURL('image/png');}
+  };
+}
+function openSign(){
+  const m=document.getElementById('signModal');m.hidden=false;
+  if(!padsReady){padI=makePad(document.getElementById('padI'));padD=makePad(document.getElementById('padD'));padsReady=true;}
+  padI.load(data.firma_instructor||'');padD.load(data.firma_intervenido||'');
+}
+function closeSign(){document.getElementById('signModal').hidden=true;}
+function clearSig(w){(w==='I'?padI:padD).clear();}
+function saveSign(){
+  data.firma_instructor = padI.isDirty()?padI.dataURL():(data.firma_instructor||'');
+  data.firma_intervenido = padD.isDirty()?padD.dataURL():(data.firma_intervenido||'');
+  persist();renderDocs();closeSign();toast('Firmas guardadas ✓');
+}
 function generate(){
   if(!horaFinManual){setVal('hora_fin',limaHHMM());persist();}
   const miss=ESSENTIAL.filter(k=>!(data[k]||'').toString().trim());
@@ -866,8 +929,12 @@ function generate(){
   }
   const sel=ACTAS.filter(a=>a.on);
   if(!sel.length){toast('Selecciona al menos un acta');return;}
-  document.getElementById('docs').innerHTML=sel.map(a=>RENDER[a.id]()).join('');
+  renderDocs();
   document.getElementById('viewer').classList.add('show');document.body.classList.add('viewing');window.scrollTo(0,0);
+}
+function renderDocs(){
+  const sel=ACTAS.filter(a=>a.on);
+  document.getElementById('docs').innerHTML=sel.map(a=>RENDER[a.id]()).join('');
 }
 function backToForm(){document.getElementById('viewer').classList.remove('show');document.body.classList.remove('viewing');window.scrollTo(0,0);}
 
@@ -888,7 +955,7 @@ async function sharePDF(){
     holder.appendChild(seed);
     const pdf=await html2pdf().set({jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},html2canvas:{scale:1,backgroundColor:'#ffffff'}}).from(seed).toPdf().get('pdf');
     seed.remove();
-    const mL=30,mT=30.5,cw=210-30-20,ch=297-30.5-20; // A4 menos márgenes
+    const mL=30,mT=18,cw=210-30-20,ch=297-18-16; // A4 menos márgenes (sup 18, izq 30, der 20, inf 16)
     for(let i=0;i<sheets.length;i++){
       const canvas=await html2pdf().set({html2canvas:{scale:2,backgroundColor:'#ffffff',useCORS:true}}).from(sheets[i]).toCanvas().get('canvas');
       let w=cw, h=canvas.height*cw/canvas.width;
