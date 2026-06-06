@@ -144,6 +144,8 @@
   .sign-pad-wrap{margin-bottom:12px}
   .sign-label{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:5px}
   .sign-clear{border:1px solid var(--line);background:#fff;border-radius:8px;padding:3px 10px;font-size:11.5px;color:var(--danger);cursor:pointer}
+  .sign-tools{display:flex;gap:8px;align-items:center}
+  .sign-up{border:1px solid var(--line);background:#fff;border-radius:8px;padding:3px 10px;font-size:11.5px;color:var(--pnp-green);cursor:pointer;font-weight:600}
   .sign-pad{width:100%;height:160px;border:2px dashed #b9c7bf;border-radius:12px;background:#fcfdfc;touch-action:none;display:block}
   .sign-actions{display:flex;gap:10px}
   .sign-actions .btn{flex:1;justify-content:center;padding:13px}
@@ -434,6 +436,8 @@
     <div class="resumen" id="resumen"></div>
     <div class="subhead" style="margin:16px 0 0">Actas a generar</div>
     <div class="actas-pick" id="actasPick"></div>
+    <button type="button" class="btn" style="width:100%;justify-content:center;margin-top:14px;border-color:#cdd6d1;color:var(--pnp-green);font-weight:700" onclick="openSign()">✍️ Agregar firmas (opcional) — celular o subir imagen</button>
+    <div id="firmaTag" class="hint" style="margin-top:8px"></div>
   </section>
 
 </main>
@@ -463,14 +467,24 @@
   <div class="sign-card">
     <div class="sign-head"><b>Firmar en el celular</b><button class="sign-x" onclick="closeSign()">✕</button></div>
     <div class="sign-pad-wrap">
-      <div class="sign-label">Firma del EFECTIVO (Instructor) <button class="sign-clear" onclick="clearSig('I')">Borrar</button></div>
+      <div class="sign-label">Firma del EFECTIVO (Instructor)
+        <span class="sign-tools">
+          <label class="sign-up">📷 Subir<input type="file" accept="image/*" hidden onchange="uploadSig('I',this)"></label>
+          <button class="sign-clear" onclick="clearSig('I')">Borrar</button>
+        </span>
+      </div>
       <canvas id="padI" class="sign-pad" width="600" height="170"></canvas>
     </div>
     <div class="sign-pad-wrap">
-      <div class="sign-label">Firma del INTERVENIDO / DETENIDO <button class="sign-clear" onclick="clearSig('D')">Borrar</button></div>
+      <div class="sign-label">Firma del INTERVENIDO / DETENIDO
+        <span class="sign-tools">
+          <label class="sign-up">📷 Subir<input type="file" accept="image/*" hidden onchange="uploadSig('D',this)"></label>
+          <button class="sign-clear" onclick="clearSig('D')">Borrar</button>
+        </span>
+      </div>
       <canvas id="padD" class="sign-pad" width="600" height="170"></canvas>
     </div>
-    <p class="hint" style="margin:4px 2px 10px">Dibuja con el dedo. Las firmas aparecerán sobre las líneas de todas las actas. Vuelve a tocar Firmar cuando cambie la persona.</p>
+    <p class="hint" style="margin:4px 2px 10px">Firma con el dedo (celular) o usa <b>📷 Subir</b> para cargar una imagen de la firma (laptop). Aparecerán sobre las líneas de todas las actas.</p>
     <div class="sign-actions">
       <button class="btn" onclick="closeSign()">Cancelar</button>
       <button class="btn primary" onclick="saveSign()">Guardar firmas</button>
@@ -514,6 +528,7 @@ function showStep(i){
   document.getElementById('btnNext').innerHTML=last?'📄 Generar actas':'Siguiente →';
   document.getElementById('btnPrev').style.visibility=curStep===0?'hidden':'visible';
   if(last) buildResumen();
+  if(last && typeof refreshFirmaTag==='function') refreshFirmaTag();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function goStep(i){showStep(i);}
@@ -906,6 +921,7 @@ function makePad(canvas){
     clear(){ctx.clearRect(0,0,canvas.width,canvas.height);dirty=false;},
     isDirty(){return dirty;},
     load(src){this.clear();if(src){const img=new Image();img.onload=()=>ctx.drawImage(img,0,0,canvas.width,canvas.height);img.src=src;}},
+    setImage(src){const img=new Image();img.onload=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);const cw=canvas.width,ch=canvas.height,s=Math.min(cw/img.width,ch/img.height),w=img.width*s,h=img.height*s;ctx.drawImage(img,(cw-w)/2,(ch-h)/2,w,h);dirty=true;};img.src=src;},
     dataURL(){return canvas.toDataURL('image/png');}
   };
 }
@@ -916,11 +932,13 @@ function openSign(){
 }
 function closeSign(){document.getElementById('signModal').hidden=true;}
 function clearSig(w){(w==='I'?padI:padD).clear();}
+function uploadSig(w,input){const f=input.files&&input.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{(w==='I'?padI:padD).setImage(r.result);};r.readAsDataURL(f);input.value='';}
 function saveSign(){
   data.firma_instructor = padI.isDirty()?padI.dataURL():(data.firma_instructor||'');
   data.firma_intervenido = padD.isDirty()?padD.dataURL():(data.firma_intervenido||'');
-  persist();renderDocs();closeSign();toast('Firmas guardadas ✓');
+  persist();renderDocs();refreshFirmaTag();closeSign();toast('Firmas guardadas ✓');
 }
+function refreshFirmaTag(){const t=document.getElementById('firmaTag');if(!t)return;const a=[];if(data.firma_instructor)a.push('efectivo');if(data.firma_intervenido)a.push('intervenido');t.innerHTML=a.length?('✓ Firmas listas: '+a.join(' y ')):'';}
 function generate(){
   if(!horaFinManual){setVal('hora_fin',limaHHMM());persist();}
   const miss=ESSENTIAL.filter(k=>!(data[k]||'').toString().trim());
